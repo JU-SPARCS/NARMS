@@ -1,0 +1,10 @@
+---
+:orm: activerecord
+:test: cucumber
+:mock: none
+:script: none
+:renderer: haml
+:stylesheet: none
+:namespace: Narms
+:migration_format: number
+:admin_renderer: haml
