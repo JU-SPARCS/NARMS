@@ -35,4 +35,5 @@ end
 # Mounts the core application for this project
 
 Padrino.mount("Narms::Admin", :app_file => Padrino.root('admin/app.rb')).to("/admin")
+Padrino.mount('Narms::Api', :app_file => Padrino.root('api/app.rb')).to('/api')
 Padrino.mount('Narms::App', :app_file => Padrino.root('app/app.rb')).to('/')
