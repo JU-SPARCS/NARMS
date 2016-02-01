@@ -1,0 +1,77 @@
+User
+  The usual stuff for a user. Email, password etc.
+  A user is linked to
+    - a uniq Role
+    - several WorkerProfile (optional)
+    - several ThirdParty::Provider::User (optional)
+        For example, it can be linked to a SAFAPS user token to
+        perform queries
+
+Role
+  This model exists to abstract from the code all the permission
+  verification. Instead of having, for example, a 'switch' for each
+  role containing 'if' statements, we end with only a few 'if'.
+  It is also easier to maintain :
+    Want to create a new role?
+      Instead of recoding everything for this role,
+      just create a new record in base!
+    Want to change permissions for a role?
+      Instead of modifying throw the entire code the permission,
+      just change it live using the record!
+  A role is linked to
+    - several User
+    - an AuditsPermissionsTable
+    - an ATCOAdministrationPermissionsTable
+    - a ShiftManagementPermissionsTable
+    - a ComplianceBreachPermissionsTable
+    - a LoggingAndComplianceCheckingPermissionsTable
+
+*PermissionsTable
+  It is a container to regroup every permissions related to the
+  same domain. Its purpose is only to clarify the use of permissions.
+  A *PermissionsTable is linked to
+    - a Role
+
+WorkerProfile
+  This model is the direct representation of someone who has to use
+  his identification card/device when working in a facility.
+  A user can have several WorkerProfile since an ATCO, for example,
+  can move from a facility to another.
+  A WorkerProfile is linked to
+    - a User
+    - a Facility
+    - several Shift
+    - several LogEvent
+    - several WorkerSchedule
+
+Shift
+  This model is for the moment a way to represent a group of
+  WorkerProfile as favorites/easy-picked-profiles for a shift manager.
+  In case shifts should be evaluated as groups of workers for a
+  period of time, the transformation of this model will consist only
+  in the creating of two new DateTime fields 'start' and 'end'.
+  A Shift is linked to
+    - several WorkerProfile
+    - a Facility
+
+Facility
+  It represents the physical facility and is used to keep every
+  entity based on this place linked.
+  A Facility is linked to
+    - several WorkerProfile
+    - several Shift
+    - several Workstation
+    - several ThirdParty::Provider::Organization
+    - a ThirdParty::Recipient::User
+
+Workstation
+  It represents the physical workstation. This model exists because
+  it lightweights the LogEvent records (we don't need to save for each
+  of those recods the name of the workstation) and allow us to keep
+  trace of its use throw a WorkstationSchedule model.
+  A Workstation is linked to
+    - several LogEvent
+    - several WorkstationSchedule
+    - a Facility
+
+
