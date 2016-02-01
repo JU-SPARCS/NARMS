@@ -16,6 +16,7 @@ ruby '2.2.3'
 # Project requirements
 gem 'rake'
 gem 'dotenv'
+gem 'annotate'
 
 # Component requirements
 gem 'bcrypt'

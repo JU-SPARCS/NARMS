@@ -1,23 +1,23 @@
 # == Schema Information
 #
-# Table name: accounts
+# Table name: users
 #
 #  id               :integer          not null, primary key
+#  pub_id           :string(255)
 #  name             :string(255)
-#  surname          :string(255)
+#  first_name       :string(255)
 #  email            :string(255)
 #  crypted_password :string(255)
-#  role             :string(255)
 #  active           :boolean          default(TRUE)
 #  created_at       :datetime
 #  updated_at       :datetime
 #
 
-class Account < ActiveRecord::Base
+class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
 
   # Validations
-  validates_presence_of     :email, :role
+  validates_presence_of     :email
   validates_presence_of     :password,                   :if => :password_required
   validates_presence_of     :password_confirmation,      :if => :password_required
   validates_length_of       :password, :within => 4..40, :if => :password_required
@@ -25,17 +25,17 @@ class Account < ActiveRecord::Base
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :email,    :case_sensitive => false
   validates_format_of       :email,    :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates_format_of       :role,     :with => /[A-Za-z]/
 
   # Callbacks
   before_save :encrypt_password, :if => :password_required
+  before_create :generate_pub_id
 
   ##
   # This method is for authentication purpose.
   #
   def self.authenticate(email, password)
-    account = where("lower(email) = lower(?)", email).first if email.present?
-    account && account.has_password?(password) ? account : nil
+    user = where("lower(email) = lower(?)", email).first if email.present?
+    (user && user.active? && account.has_password?(password)) ? user : nil
   end
 
   def has_password?(password)
@@ -56,5 +56,12 @@ class Account < ActiveRecord::Base
 
   def password_required
     crypted_password.blank? || password.present?
+  end
+
+  def generate_pub_id
+    self.pub_id = loop do
+      s = Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
+      break s unless self.class.exists?(pub_id: s)
+    end
   end
 end

@@ -6,6 +6,11 @@ module Narms
 
     enable :sessions
 
+    before except: '/login' do
+      @current_user = current_user
+      redirect :login if @current_user.nil?
+    end
+
     ##
     # Caching support.
     #
