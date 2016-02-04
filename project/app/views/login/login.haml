@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %title Page Title
+    = stylesheet_link_tag '/app/stylesheets/login'
+  %body
+    %a{:href => "#"}
+      %h1.page-title
+        NARMS
+    .container
+      .login
+        %h1 Login
+        = form_tag '/login', :method => 'post' do
+          %p
+            %input{:name => "email", :placeholder => "Email", :type => "email", :value => ""}/
+          %p
+            %input{:name => "password", :placeholder => "Password", :type => "password", :value => ""}/
+          %p.submit
+            %input{:name => "commit", :type => "submit", :value => "Login"}/
+            = error_messages_for :user

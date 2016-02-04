@@ -1,12 +1,17 @@
 Narms::App.controllers :login do
   get :index do
     "TODO: login page..."
-    # render 'index'
+    render :login
   end
 
   post :index do
-    set_current_user User.authenticate(params[:email], params[:password])
-    redirect nil
+    user = User.authenticate(params[:email], params[:password])
+    set_current_user = user
+    if user != nil then
+      render 'Logged in'
+    else
+      redirect :login
+    end
   end
 
   delete :index do
