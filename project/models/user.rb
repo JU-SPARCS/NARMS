@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   #
   def self.authenticate(email, password)
     user = where("lower(email) = lower(?)", email).first if email.present?
-    (user && user.active? && account.has_password?(password)) ? user : nil
+    (user && user.active? && user.has_password?(password)) ? user : nil
   end
 
   def has_password?(password)

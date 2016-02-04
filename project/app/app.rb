@@ -11,6 +11,24 @@ module Narms
       redirect :login if @current_user.nil?
     end
 
+
+    # Create a dummy user for test
+    email = "atco@gmail.com"
+    password = "password"
+    password_confirmation = "password"
+
+    puts "app.rb: Trying to create a user for testing purpose. If it already exists an error will be shown."
+    user = User.new(:email => email, :password => password, :password_confirmation => password_confirmation)
+
+    if user.valid?
+      user.save
+      puts "app.rb: User atco@gmail.com created."
+    else
+      puts "app.rb: Can't create User atco@gmail.com."
+      user.errors.full_messages.each { |m| puts "  - #{m}" }
+    end
+
+
     ##
     # Caching support.
     #

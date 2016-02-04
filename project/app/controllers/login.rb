@@ -6,12 +6,19 @@ Narms::App.controllers :login do
 
   post :index do
     user = User.authenticate(params[:email], params[:password])
-    set_current_user = user
-    if user != nil then
-      render 'Logged in'
+    puts user
+    if user
+      set_current_user = user
+      'Logged in'
     else
       redirect :login
     end
+
+    # if params[:email] == "atco@gmail.com" and params[:password] == "password" then
+    #   'Logged in'
+    # else
+    #   redirect :login
+    # end
   end
 
   delete :index do
