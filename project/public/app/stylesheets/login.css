@@ -44,3 +44,7 @@ body {
 .login input[type=submit]:hover {
   border: solid #CCCC99 5px;
 }
+
+.form-error {
+  color: red;
+}

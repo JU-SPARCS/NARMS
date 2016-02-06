@@ -6,19 +6,14 @@ Narms::App.controllers :login do
 
   post :index do
     user = User.authenticate(params[:email], params[:password])
-    puts user
     if user
       set_current_user = user
       'Logged in'
     else
-      redirect :login
+      params[:email] = h(params[:email])
+      flash.now[:error] = {'email': 'Invalid email and password combination.'}
+      render "/login/login"
     end
-
-    # if params[:email] == "atco@gmail.com" and params[:password] == "password" then
-    #   'Logged in'
-    # else
-    #   redirect :login
-    # end
   end
 
   delete :index do

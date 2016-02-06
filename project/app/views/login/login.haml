@@ -12,9 +12,11 @@
         %h1 Login
         = form_tag '/login', :method => 'post' do
           %p
-            %input{:name => "email", :placeholder => "Email", :type => "email", :value => ""}/
+            %input{:name => "email", :placeholder => "Email", :type => "email", :value => params[:email]}/
           %p
             %input{:name => "password", :placeholder => "Password", :type => "password", :value => ""}/
           %p.submit
             %input{:name => "commit", :type => "submit", :value => "Login"}/
-            = error_messages_for :user
+          %p.form-error 
+            - if flash.now[:error]
+              = flash.now[:error][:email]
