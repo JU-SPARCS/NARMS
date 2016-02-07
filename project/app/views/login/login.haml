@@ -1,22 +1,35 @@
-!!!
-%html
-  %head
-    %title Page Title
-    = stylesheet_link_tag '/app/stylesheets/login'
-  %body
-    %a{:href => "#"}
-      %h1.page-title
-        NARMS
-    .container
-      .login
-        %h1 Login
-        = form_tag '/login', :method => 'post' do
-          %p
-            %input{:name => "email", :placeholder => "Email", :type => "email", :value => params[:email]}/
-          %p
-            %input{:name => "password", :placeholder => "Password", :type => "password", :value => ""}/
-          %p.submit
-            %input{:name => "commit", :type => "submit", :value => "Login"}/
-          %p.form-error 
-            - if flash.now[:error]
-              = flash.now[:error][:email]
+/= Navigation bar
+
+= content_for :navbar do
+  .navbar-header
+    %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    = link_to '/login', :class => "navbar-brand" do
+      NARMS
+
+/= Actual content
+
+= content_for :container do
+  = form_tag '/login', :method =>'post', :class => 'form-horizontal col-lg-6 center-block' do
+    %fieldset
+      %legend LOGIN
+      .form-group
+        %label.col-lg-2.control-label{:for => "email"} Email
+        .col-lg-10
+          %input#inputEmail.form-control{:id => "email", :name => "email", :placeholder => "Email", :type => "email", :value => params[:email]}
+      .form-group
+        %label.col-lg-2.control-label{:id => "password", :for => "password"} Password
+        .col-lg-10
+          %input#inputPassword.form-control{:name => "password", :placeholder => "Password", :type => "password"}
+      .form-group
+        .col-lg-10.col-lg-offset-2
+          %button.btn.btn-primary{:type => "submit"} Login
+
+      /= If an error happened display message
+      - if flash.now[:error]
+        .form-group
+          .col-lg-10.col-lg-offset-2
+            %p.text-danger Incorrect combination of email and password.
