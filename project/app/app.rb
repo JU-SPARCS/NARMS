@@ -11,6 +11,7 @@ module Narms
       redirect :login if @current_user.nil?
     end
 
+
     ##
     # Caching support.
     #

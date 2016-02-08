@@ -1,0 +1,17 @@
+/= MAIN TEMPLATE FOR THE NARMS WEB APPLICATION
+
+!!!
+%html
+  %head
+    %title NARMS
+    = stylesheet_link_tag "/app/css/bootstrap.min.css"
+    = stylesheet_link_tag "/app/css/bootstrap.cosmo.css"
+  %body
+    %nav.navbar.navbar-default
+      .container-fluid
+        = yield_content :navbar
+    .container
+      = yield_content :container
+
+    = javascript_include_tag '/app/js/jquery-2.2.0.min.js'
+    = javascript_include_tag '/app/js/bootstrap.min.js'
