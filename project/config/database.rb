@@ -20,7 +20,7 @@ ActiveRecord::Base.configurations[Padrino.env] = {
   :database  => ENV["DATABASE_NAME"] || "narms_#{Padrino.env}",
   :pool      => 5,
   :username  => ENV["DATABASE_USERNAME"] || "root",
-  :password  => ENV["DATABASE_PASSWORD"] || "password",
+  :password  => ENV["DATABASE_PASSWORD"] || "",
   :host      => ENV["DATABASE_HOST"] || "localhost",
   :socket    => ENV["DATABASE_SOCKET"] || "/tmp/mysql.sock"
 
