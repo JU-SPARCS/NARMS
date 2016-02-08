@@ -6,6 +6,8 @@
     %title NARMS
     = stylesheet_link_tag "/app/css/bootstrap.min.css"
     = stylesheet_link_tag "/app/css/bootstrap.cosmo.css"
+    = yield_content :css
+
   %body
     %nav.navbar.navbar-default
       .container-fluid
@@ -15,5 +17,4 @@
 
     = javascript_include_tag '/app/js/jquery-2.2.0.min.js'
     = javascript_include_tag '/app/js/bootstrap.min.js'
-
     = yield_content :javascript

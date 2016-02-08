@@ -1,7 +1,20 @@
 Narms::App.controllers :log_events, :parent => [:workers] do
 
   get :index do
-    render '/log_events/list'
+    worker = WorkerProfile.find_by_id params[:worker_id]
+    if worker
+      if params[:start] && params[:end]
+        log_events = Events::Log.where(:happened_at => params[:start]..params[:end], :worker_profile => worker)
+      else
+        log_events = worker.log_events
+      end
+      @worker = worker
+      @facility = @worker.facility
+      @log_events = log_events
+      render '/log_events/list'
+    else
+      halt 404
+    end
   end
 
   # get :index, :map => '/foo/bar' do
