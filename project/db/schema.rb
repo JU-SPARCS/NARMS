@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 6) do
+ActiveRecord::Schema.define(version: 7) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -34,6 +34,20 @@ ActiveRecord::Schema.define(version: 6) do
   end
 
   add_index "airspace_segments", ["facility_id"], name: "index_airspace_segments_on_facility_id", using: :btree
+
+  create_table "events_logs", force: :cascade do |t|
+    t.datetime "happened_at"
+    t.string   "worker_role",           limit: 255
+    t.string   "worker_responsability", limit: 255
+    t.string   "operational_status",    limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "workstation_id",        limit: 4
+    t.integer  "worker_profile_id",     limit: 4
+  end
+
+  add_index "events_logs", ["worker_profile_id"], name: "index_events_logs_on_worker_profile_id", using: :btree
+  add_index "events_logs", ["workstation_id"], name: "index_events_logs_on_workstation_id", using: :btree
 
   create_table "facilities", force: :cascade do |t|
     t.string   "pub_id",     limit: 255

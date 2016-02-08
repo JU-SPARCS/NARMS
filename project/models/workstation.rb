@@ -12,4 +12,5 @@
 
 class Workstation < ActiveRecord::Base
   belongs_to :facility, required: true
+  has_many :log_events, class_name: Events::Log, dependent: :destroy
 end
