@@ -8,10 +8,15 @@ class CreateWorkerProfiles < ActiveRecord::Migration
       t.string   :first_name
       t.datetime :date_of_birth
 
-      t.boolean :active, default: true
+      t.boolean  :active, default: true
       
       t.timestamps
+
+      # associations:
+      t.integer  :facility_id
     end
+
+    add_index :worker_profiles, :facility_id
   end
 
   def self.down

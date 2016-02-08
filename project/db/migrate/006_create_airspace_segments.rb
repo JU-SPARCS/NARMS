@@ -7,7 +7,12 @@ class CreateAirspaceSegments < ActiveRecord::Migration
       t.string   :name
 
       t.timestamps
+
+      # associations:
+      t.integer  :facility_id
     end
+
+    add_index :airspace_segments, :facility_id
   end
 
   def self.down

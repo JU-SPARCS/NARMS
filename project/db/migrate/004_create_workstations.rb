@@ -7,7 +7,12 @@ class CreateWorkstations < ActiveRecord::Migration
       t.string   :name
       
       t.timestamps
+
+      # associations:
+      t.integer  :facility_id
     end
+
+    add_index :workstations, :facility_id
   end
 
   def self.down

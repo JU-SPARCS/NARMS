@@ -25,12 +25,15 @@ ActiveRecord::Schema.define(version: 6) do
   end
 
   create_table "airspace_segments", force: :cascade do |t|
-    t.string   "pub_id",     limit: 255
-    t.boolean  "active",                 default: true
-    t.string   "name",       limit: 255
+    t.string   "pub_id",      limit: 255
+    t.boolean  "active",                  default: true
+    t.string   "name",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "facility_id", limit: 4
   end
+
+  add_index "airspace_segments", ["facility_id"], name: "index_airspace_segments_on_facility_id", using: :btree
 
   create_table "facilities", force: :cascade do |t|
     t.string   "pub_id",     limit: 255
@@ -60,14 +63,20 @@ ActiveRecord::Schema.define(version: 6) do
     t.datetime "date_of_birth"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "facility_id",   limit: 4
   end
 
+  add_index "worker_profiles", ["facility_id"], name: "index_worker_profiles_on_facility_id", using: :btree
+
   create_table "workstations", force: :cascade do |t|
-    t.string   "pub_id",     limit: 255
-    t.boolean  "active",                 default: true
-    t.string   "name",       limit: 255
+    t.string   "pub_id",      limit: 255
+    t.boolean  "active",                  default: true
+    t.string   "name",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "facility_id", limit: 4
   end
+
+  add_index "workstations", ["facility_id"], name: "index_workstations_on_facility_id", using: :btree
 
 end
