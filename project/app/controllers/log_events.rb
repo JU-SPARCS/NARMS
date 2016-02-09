@@ -1,10 +1,13 @@
+require 'time'
 Narms::App.controllers :log_events, :parent => [:workers] do
 
   get :index do
     worker = WorkerProfile.find_by_id params[:worker_id]
     if worker
       if params[:start] && params[:end]
-        log_events = Events::Log.where(:happened_at => params[:start]..params[:end], :worker_profile => worker)
+        start_date = DateTime.parse(params[:start])
+        end_date = DateTime.parse(params[:end])
+        log_events = Events::Log.where(:happened_at => start_date..end_date, :worker_profile => worker)
       else
         log_events = worker.log_events
       end
