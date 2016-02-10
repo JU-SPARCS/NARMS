@@ -15,7 +15,7 @@ Narms::App.controllers :login do
     else
       params[:email] = h(params[:email])
       flash.now[:error] = {'email': 'Invalid email and password combination.'}
-      redirect url :login, :login
+      render '/login/login'
     end
   end
 
