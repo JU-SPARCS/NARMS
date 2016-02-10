@@ -14,4 +14,5 @@
 class Facility < ActiveRecord::Base
   has_many :worker_profiles, dependent: :destroy
   has_many :workstations, dependent: :destroy
+  has_many :shifts, dependent: :destroy
 end
