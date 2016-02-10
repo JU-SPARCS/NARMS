@@ -1,44 +1,6 @@
 = content_for :css do
   = stylesheet_link_tag "/app/css/bootstrap-datetimepicker.min.css"
 
-= content_for :navbar do
-  .navbar-header
-    %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-      %span.sr-only
-        Toggle navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a.navbar-brand{:href => "#"}
-      NARMS
-  #bs-example-navbar-collapse-1.collapse.navbar-collapse
-    %ul.nav.navbar-nav
-      %li
-        %a{:href => "#"}
-          My Profile
-          %span.sr-only (current)
-      %li
-        %a{:href => "#"} Schedule
-      %li.active
-        %a{:href => "#"} Log events
-    %ul.nav.navbar-nav.navbar-right
-      %li.dropdown
-        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-          %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
-          %span.caret
-        %ul.dropdown-menu{:role => "menu"}
-          %li
-            %a{:href => "#"} ATCO Profile 1
-          %li.divider
-          %li.list-group-item-success
-            %a{:href => "#"} ATCO Profile 2
-          %li.divider
-          %li
-            %a{:href => "#"} ATCO Profile 3
-      %li
-        =button_to :logout, url(:login, :index), :method => :delete, :class => 'navbar-nav-form', :style => 'margin-top:10px;' do
-          Logout
-
 = content_for :container do
   %h1.text-capitalize Log events:
   .col-lg-12.page-header
@@ -52,10 +14,11 @@
       %thead
         %tr
           %td.success.text-center{:colspan => "7"}
-            = @facility.name ? @facility.name : 'Unnamed facility'
+            'Unnamed facility'
         %tr
           %th #
           %th Time
+          %th Facility
           %th Role
           %th Responsibility
           %th Operational Status
@@ -67,6 +30,8 @@
               = log_event.id
             %td
               = log_event.happened_at
+            %td
+              = log_event.worker_profile.facility.name
             %td
               = log_event.worker_role
             %td

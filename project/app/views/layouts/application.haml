@@ -11,7 +11,34 @@
   %body
     %nav.navbar.navbar-default
       .container-fluid
-        = yield_content :navbar
+        .navbar-header
+          %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "#"} NARMS
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %ul.nav.navbar-nav
+            - visible_tabs.each do |k, v|
+              %li
+                = link_to v do
+                  = k
+          - if current_user
+            %ul.nav.navbar-nav.navbar-right
+              %li.dropdown
+                %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                  %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
+                  %span.caret
+                %ul.dropdown-menu{:role => "menu"}
+                  %li.list-group-item
+                    ATCO@GMAIL.COM
+                  %li.divider
+                  %li
+                    =button_to :logout, url(:login, :index), :method => :delete, :class => 'navbar-nav-form text-center' do
+                      Logout
+
     .container
       = yield_content :container
 

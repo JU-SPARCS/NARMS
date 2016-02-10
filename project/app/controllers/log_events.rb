@@ -1,7 +1,14 @@
 require 'time'
-Narms::App.controllers :log_events, :parent => [:workers] do
+Narms::App.controllers :log_events do
 
   get :index do
+    # Here you should get the worker_profiles that are linked to the current_user.
+    # However because at this point the link has not yet been created in the models, I will just query for all worker profiles.
+    @worker_profiles = WorkerProfile.all
+    render '/log_events/select_profile'
+  end
+
+  get :index, :parent => :workers do
     worker = WorkerProfile.find_by_id params[:worker_id]
     if worker
       if params[:start] && params[:end]
@@ -19,25 +26,4 @@ Narms::App.controllers :log_events, :parent => [:workers] do
       halt 404
     end
   end
-
-  # get :index, :map => '/foo/bar' do
-  #   session[:foo] = 'bar'
-  #   render 'index'
-  # end
-  #
-  # get :sample, :map => '/sample/url', :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
-  #
-  # get :foo, :with => :id do
-  #   "Maps to url '/foo/#{params[:id]}'"
-  # end
-  #
-  # get '/example' do
-  #   'Hello world!'
-  # end
-
-
 end

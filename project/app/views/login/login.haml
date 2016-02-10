@@ -1,15 +1,3 @@
-/= Navigation bar
-
-= content_for :navbar do
-  .navbar-header
-    %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-      %span.sr-only Toggle navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    = link_to '/login', :class => "navbar-brand" do
-      NARMS
-
 /= Actual content
 
 = content_for :container do

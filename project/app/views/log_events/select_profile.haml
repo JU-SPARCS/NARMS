@@ -1,0 +1,9 @@
+= content_for :container do
+  %h1.text-capitaliz Select worker profile:
+  %ul.list-group
+    - @worker_profiles.each do |worker|
+      = link_to "/workers/#{worker.id}/log_events" do
+        %li.list-group-item
+          %span.badge
+            = worker.facility.name
+          = worker.name + ' ' + worker.first_name
