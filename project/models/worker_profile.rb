@@ -10,6 +10,7 @@
 #  date_of_birth :datetime
 #  created_at    :datetime
 #  updated_at    :datetime
+#  facility_id   :integer
 #
 
 class WorkerProfile < ActiveRecord::Base

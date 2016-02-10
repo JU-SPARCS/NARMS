@@ -9,6 +9,8 @@
 #  operational_status    :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime
+#  workstation_id        :integer
+#  worker_profile_id     :integer
 #
 
 require 'spec_helper'

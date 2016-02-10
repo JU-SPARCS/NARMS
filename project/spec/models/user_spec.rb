@@ -11,6 +11,7 @@
 #  active           :boolean          default(TRUE)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  role_id          :integer
 #
 
 require 'spec_helper'
