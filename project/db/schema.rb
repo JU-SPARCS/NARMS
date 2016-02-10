@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 7) do
+ActiveRecord::Schema.define(version: 10) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -58,6 +58,28 @@ ActiveRecord::Schema.define(version: 7) do
     t.datetime "updated_at"
   end
 
+  create_table "permissions_tables_shift_managements", force: :cascade do |t|
+    t.string   "conduct_safaps_assessment",          limit: 255, default: "nobody"
+    t.string   "prepare_shift_schedule",             limit: 255, default: "nobody"
+    t.string   "view_atco_safaps_shift_inputs",      limit: 255, default: "nobody"
+    t.string   "view_atco_safaps_shift_assessments", limit: 255, default: "nobody"
+    t.string   "manage_atco_safaps_categories",      limit: 255, default: "nobody"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "role_id",                            limit: 4
+  end
+
+  add_index "permissions_tables_shift_managements", ["role_id"], name: "index_permissions_tables_shift_managements_on_role_id", using: :btree
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "active",                 default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "pub_id",           limit: 255
     t.string   "name",             limit: 255
@@ -67,6 +89,7 @@ ActiveRecord::Schema.define(version: 7) do
     t.boolean  "active",                       default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role_id",          limit: 4
   end
 
   create_table "worker_profiles", force: :cascade do |t|

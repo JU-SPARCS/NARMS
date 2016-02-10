@@ -11,10 +11,14 @@
 #  active           :boolean          default(TRUE)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  role_id          :integer
 #
 
 class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
+
+  # Associations
+  belongs_to :role, required: true
 
   # Validations
   validates_presence_of     :email
