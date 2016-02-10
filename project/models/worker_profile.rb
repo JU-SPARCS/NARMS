@@ -14,6 +14,17 @@
 #
 
 class WorkerProfile < ActiveRecord::Base
+  # Associations
   belongs_to :facility, required: true
-  has_many :log_events, class_name: Events::Log, dependent: :destroy
+  has_and_belongs_to_many :shifts
+  has_many :worker_schedules,
+    class_name: Schedules::Worker,
+    dependent: :destroy
+  has_many :log_events,
+    class_name: Events::Log,
+    dependent: :destroy
+
+  # Validations
+
+  # Callbacks
 end
