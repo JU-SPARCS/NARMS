@@ -1,0 +1,27 @@
+= content_for :container do
+  %h1 Schedules:
+  %table.table.table-striped.table-hover
+    %thead
+      %tr.success
+        %th Worker Sc. #
+        %th Worker Profile
+        %th Facility
+        %th Begin
+        %th End
+        %th Options
+    %tbody
+    - @worker_schedules.each do |ws|
+      %tr
+        %td
+          = ws.id
+        %td
+          = ws.worker_profile.name + " " + ws.worker_profile.first_name
+        %td
+          = ws.worker_profile.facility.name
+        %td
+          = ws.begin
+        %td
+          = ws.end
+        %td
+          = link_to "workers/#{ws.worker_profile.id}/worker_schedules/#{ws.id}", :class => 'btn btn-primary btn-sm' do
+            View
