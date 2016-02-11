@@ -78,7 +78,7 @@
     / Shift details tab
     #shift-details.tab-pane.fade
       .col-lg-12.page-header
-        %button#show-form-btn.btn.btn-default Add ATCO
+        %button#show-form-btn.btn.btn-primary Add ATCO
         %form#add-atco-form.form-inline.display
           .form-group
             %select#atco-select.form-control
@@ -116,6 +116,13 @@
                 %span.col-lg-6.text-uppercase Facility:
                 %span.col-lg-6
                   = @shift.facility.name
+            .btn-group.btn-group-justified
+              = link_to "/workers/#{worker.id}/shifts", :class => 'btn btn-default' do
+                Shifts
+              = link_to "/workers/#{worker.id}/worker_schedules", :class => 'btn btn-default' do
+                Schedules
+              = link_to "/workers/#{worker.id}/log_events", :class => 'btn btn-default' do
+                Log Events
 
 = content_for :javascript do
   = javascript_include_tag '/app/js/view-shift.js'

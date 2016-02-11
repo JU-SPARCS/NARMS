@@ -22,6 +22,7 @@
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %ul.nav.navbar-nav
+            /= USE NAVBAR_HELPER TO CREATE THE NAVBAR TABS
             - visible_tabs.each do |k, v|
               %li
                 = link_to v do
