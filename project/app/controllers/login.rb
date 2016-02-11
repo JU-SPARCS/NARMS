@@ -1,7 +1,7 @@
 Narms::App.controllers :login do
   get :index do
     if current_user
-      redirect nil
+      redirect url(:base,:index)
     else
       render "/login/login"
     end
@@ -11,7 +11,7 @@ Narms::App.controllers :login do
     user = User.authenticate(params[:email], params[:password])
     if user
       set_current_user user
-      redirect nil
+      redirect url(:base, :index)
     else
       params[:email] = h(params[:email])
       flash.now[:error] = {'email': 'Invalid email and password combination.'}
