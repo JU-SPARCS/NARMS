@@ -1,0 +1,27 @@
+= content_for :container do
+  %h1.text-capitalize Shift Teams:
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th #
+        %th Facility
+        %th Begin
+        %th End
+        %th Nr. of ATCOs
+        %th Options
+    %tbody
+      - @shifts.each do |shift|
+        %tr
+          %td
+            = shift.id
+          %td
+            = shift.facility.name
+          %td
+            = shift.begin
+          %td
+            = shift.end
+          %td
+            = shift.worker_profiles.count
+          %td
+            = link_to "/shifts/#{shift.id}", :class => 'btn btn-primary btn-sm' do
+              View

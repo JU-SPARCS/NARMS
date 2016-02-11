@@ -21,7 +21,7 @@
           .row
             %span.col-lg-6.text-uppercase Date of birth:
             %span.col-lg-6
-              = worker.date_of_birth
+              = worker.date_of_birth ? worker.date_of_birth.strftime('%Y-%m-%d') : "Unspecified"
           .row
             %span.col-lg-6.text-uppercase Facility:
             %span.col-lg-6
