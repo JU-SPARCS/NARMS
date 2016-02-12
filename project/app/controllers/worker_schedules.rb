@@ -13,7 +13,7 @@ Narms::App.controllers :worker_schedules do
    get :index, :parent => :workers do
      worker = WorkerProfile.find_by_id params[:worker_id]
      if worker
-       @worker_schedules = worker.worker_schedules
+       @worker_schedules = worker.schedules
        render '/worker_schedules/select_schedule'
      else
        halt 404
