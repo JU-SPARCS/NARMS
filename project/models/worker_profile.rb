@@ -17,7 +17,7 @@ class WorkerProfile < ActiveRecord::Base
   # Associations
   belongs_to :facility, required: true
   has_and_belongs_to_many :shifts
-  has_many :worker_schedules,
+  has_many :schedules,
     class_name: Schedules::Worker,
     dependent: :destroy
   has_many :log_events,
