@@ -9,4 +9,4 @@ Scenario: Login page
     	  |Email|atco@gmail.com|
           |Password|password|
 	  And I press "submit"
-	  Then I should see "Profile page"
+	  Then I should see "Worker profiles:"
