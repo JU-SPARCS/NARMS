@@ -15,8 +15,10 @@
 
 class WorkerProfile < ActiveRecord::Base
   # Associations
+  belongs_to :user, required: true
   belongs_to :facility, required: true
   has_and_belongs_to_many :shifts
+
   has_many :schedules,
     class_name: Schedules::Worker,
     dependent: :destroy

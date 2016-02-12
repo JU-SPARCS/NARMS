@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 14) do
+ActiveRecord::Schema.define(version: 15) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 14) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "facility_id",   limit: 4
+    t.integer  "user_id",       limit: 4
   end
 
   add_index "worker_profiles", ["facility_id"], name: "index_worker_profiles_on_facility_id", using: :btree
