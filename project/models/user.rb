@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
   # Associations
   belongs_to :role, required: true
+  has_many :worker_profiles
 
   # Validations
   validates_presence_of     :email
