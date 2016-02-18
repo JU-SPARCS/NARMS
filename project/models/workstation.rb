@@ -12,6 +12,11 @@
 #
 
 class Workstation < ActiveRecord::Base
+
+  # Associations
   belongs_to :facility, required: true
-  has_many :log_events, class_name: Events::Log, dependent: :destroy
+  has_many :log_events, class_name: Events::Log, foreign_key: :workstation_id
+
+  # Validations
+  # Callbacks
 end

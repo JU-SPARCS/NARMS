@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: schedules_workers
+#
+#  id               	:integer          not null, primary key
+#  begin       			:datetime
+#  end       			:datetime
+#  created_at       	:datetime
+#  updated_at       	:datetime
+#  worker_profile_id	:integer
+#
+
 class Schedules::Worker < ActiveRecord::Base
   # Associations
   belongs_to :worker_profile, required: true

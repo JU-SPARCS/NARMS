@@ -10,11 +10,10 @@
 #
 
 class Role < ActiveRecord::Base
+
   # Associations
   has_many :users
-  has_one :shift_management_permissions_table,
-    class_name: PermissionsTables::ShiftManagement,
-    dependent: :destroy
+  has_one :shift_management_permissions_table, class_name: PermissionsTables::ShiftManagement, dependent: :destroy
 
   # Validation
   validates_presence_of :name
