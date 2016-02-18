@@ -2,7 +2,7 @@
   %h1.text-capitalize Worker profiles:
   - @worker_profiles.each do |worker|
     .col-lg-4
-      .panel.panel-info
+      .panel.panel-success
         .panel-heading
           %h3.panel-title Person details:
         .panel-body
@@ -29,7 +29,7 @@
         .btn-group.btn-group-justified
           = link_to "/workers/#{worker.id}/shifts", :class => 'btn btn-default' do
             Shifts
-          = link_to "/workers/#{worker.id}/schedules", :class => 'btn btn-default' do
+          = link_to "/workers/#{worker.id}/worker_schedules", :class => 'btn btn-default' do
             Schedules
           = link_to "/workers/#{worker.id}/log_events", :class => 'btn btn-default' do
             Log Events
