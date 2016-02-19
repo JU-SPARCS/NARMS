@@ -7,52 +7,46 @@
   *  start_at   Time                         It is the date of day to start the schedule with. By default, start_at = Date.today.beginning_of_week
 
 .table-responsive
-  %table.table.table-condensed
+  %table.table.table-condensed.table-bordered
     %thead
-      %tr
-        %th.col-lg-1
-        - (0..6).each do |i|
-          %th
-            .text-center= (start_at + i*60*60*24).strftime("%A %-d/%-m")
-      %tbody
-        - time = Time.new(start_at.year, start_at.month, start_at.day, 00, 00) 
-
-        - display_row = -1
-        - while time.day == start_at.day do
-
-          - slots_to_display = Array.new
+      %tr.active
+        %th
+          / Initialize default starting time if not defined
+          - if defined? start_at == nil
+            - start_at = Date.today.beginning_of_week.to_time
+          / For each day write the days in the heading
           - (0..6).each do |i|
-            - slot_to_display = nil
-            - schedules.each do |schedule|
-              - schedule.slots.each do |slot|
-                - if slot.begin == (time + (i * 60*60*24))
-                  - slot_to_display = slot
-                  - display_row = 1
-                  - break 2
+            %th
+              .text-center.text-muted.small
+                = (start_at + i*60*60*24).strftime("%A  %-d/%-m")
+    %tbody
 
-            - slots_to_display.push(slot_to_display)
+      - last_row_displayed = false
+      - slots_to_display = slots_over_week schedules, start_at
+      - time = Time.new(start_at.year, start_at.month, start_at.day, 00, 00)
 
-
-          - if display_row == 0
-            - display_row -= 1
+      - slots_to_display.each do |slots_for_time|
+        - if slots_for_time != nil
+          - last_row_displayed = true
+          %tr
+            %td.active
+              .text-center.text-muted
+                %strong.small
+                  = time.strftime("%H:%M")
+            - slots_for_time.each do |slot|
+              - if slot != nil
+                %td.text-center
+                  %strong ER1 (not impl)
+                  .small= slot.schedule.worker_profile.facility.name                  
+              - else
+                %td{:align => "center"}
+        - else
+          - if last_row_displayed == true
+            - last_row_displayed = false
             - (0..1).each do |j|
               %tr
-              - (0..7).each do |i|
-                %td
+                %td.active
+                - (0..6).each do |i|
+                  %td
+        - time += 60*30 
 
-
-          - if display_row > 0
-            - display_row -= 1
-            %tr
-              %td
-                %span.text-center= time.strftime("%H:%M")
-
-              - slots_to_display.each do |slot|
-                - if slot != nil
-                  %td{:align => "center"}
-                    = slot.schedule.worker_profile.facility.name                  
-
-                - else
-                  %td{:align => "center"}
-
-          - time += 60*30 

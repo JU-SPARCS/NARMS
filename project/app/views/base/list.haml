@@ -8,4 +8,22 @@
 
 = content_for :container do
 
-  = partial "/base/schedule_table_days.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }
+  .row
+    %h1 Current Schedule
+  .row
+    .col-lg-9
+      = partial "/base/schedule_table_days.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }
+    .col-lg-3
+      .panel.panel-default
+        .panel-heading
+          %h3 Facilities
+          %h3.small Here are the facilities you are working in. Select one of them to see more details.
+        %ul.list-group
+          - @current_schedules.each do |schedule|
+            = link_to "/workers/#{schedule.worker_profile.id}/worker_schedules" do
+              %li.list-group-item
+                %span= schedule.worker_profile.facility.name
+                .glyphicon.glyphicon-chevron-right.pull-right
+                .badge.pull-right= schedule.slots.size
+
+
