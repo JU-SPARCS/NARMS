@@ -1,35 +1,11 @@
+/ This view is the home page for any ATCO.
+/ 
+  Required Parameters:
+  *  @current_schedules  Array("Schedules::Worker")      It contains the current schedule for all the worker profile (begin: < NOW() < end:).
+/ 
+  Optional Parameters:
+
+
 = content_for :container do
-  %h1.text-capitalize Worker profiles:
-  - @worker_profiles.each do |worker|
-    .col-lg-4
-      .panel.panel-success
-        .panel-heading
-          %h3.panel-title Person details:
-        .panel-body
-          .row
-            %span.col-lg-6.text-uppercase Public ID:
-            %span.col-lg-6
-              = worker.id
-          .row
-            %span.col-lg-6.text-uppercase First name:
-            %span.col-lg-6
-              = worker.first_name
-          .row
-            %span.col-lg-6.text-uppercase Last name:
-            %span.col-lg-6
-              = worker.name
-          .row
-            %span.col-lg-6.text-uppercase Date of birth:
-            %span.col-lg-6
-              = worker.date_of_birth ? worker.date_of_birth.strftime('%Y-%m-%d') : "Unspecified"
-          .row
-            %span.col-lg-6.text-uppercase Facility:
-            %span.col-lg-6
-              = worker.facility.name
-        .btn-group.btn-group-justified
-          = link_to "/workers/#{worker.id}/shifts", :class => 'btn btn-default' do
-            Shifts
-          = link_to "/workers/#{worker.id}/worker_schedules", :class => 'btn btn-default' do
-            Schedules
-          = link_to "/workers/#{worker.id}/log_events", :class => 'btn btn-default' do
-            Log Events
+
+  = partial "/base/schedule_table_days.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }

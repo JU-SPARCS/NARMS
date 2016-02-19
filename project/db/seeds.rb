@@ -2,6 +2,8 @@
 
 # Add transaction to rollback the seed if any error occurs
 ActiveRecord::Base.transaction do
+
+  # Launch with deseed=true as argument to deseed the database
   if ENV["deseed"]
     Role.delete_all
     User.delete_all
@@ -42,10 +44,12 @@ ActiveRecord::Base.transaction do
     wo5 = atco5.worker_profiles.create!(first_name: atco5.first_name, name: atco4.name, facility_id: f1.id, pub_id: '2105')
     wo6 = atco1.worker_profiles.create!(first_name: atco1.first_name, name: atco1.name, facility_id: f2.id, pub_id: '2243')
     
+    today = Date.today.to_time
+    beginning_of_week = today.beginning_of_week
     # Create shifts over several period on several facilities.
-    sft1 = f1.shifts.create!(begin: DateTime.parse('2015-02-11 00:00:00'), end: DateTime.parse('2017-03-11 00:00:00'))
-    sft2 = f1.shifts.create!(begin: DateTime.parse('2015-03-11 00:00:00'), end: DateTime.parse('2017-04-11 00:00:00'))
-    sft3 = f2.shifts.create!(begin: DateTime.parse('2015-02-11 00:00:00'), end: DateTime.parse('2017-03-11 00:00:00'))
+    sft1 = f1.shifts.create!(begin: today.beginning_of_month, end: today.beginning_of_month.next_month)
+    sft2 = f1.shifts.create!(begin: today.beginning_of_month, end: today.beginning_of_month.next_month)
+    sft3 = f2.shifts.create!(begin: today.beginning_of_month, end: today.beginning_of_month.next_month)
 
     # Assign worker profile to shifts. The worker profile must be assign on shift in their facility
     # WARNING: No worker profile can be on shifts with overlapping period.
@@ -54,19 +58,19 @@ ActiveRecord::Base.transaction do
     sft3.worker_profiles << [wo6]
 
     # Create a schedule for a worker profile
-    sch1 = wo1.schedules.create!(begin: '2016-02-11 10:00:00', end: '2015-02-18 10:00:00')
+    sch1 = wo1.schedules.create!(begin: today.beginning_of_week, end: today.end_of_week)
     # Create slots for this schedule
-    slt1 = sch1.slots.create!(begin: '2016-02-11 10:30:00', end: '2016-02-1 11:00:00')
-    slt2 = sch1.slots.create!(begin: '2016-02-11 17:00:00', end: '2016-02-11 17:30:00')
-    slt3 = sch1.slots.create!(begin: '2016-02-12 13:30:00', end: '2016-02-12 14:00:00')
-    slt4 = sch1.slots.create!(begin: '2016-02-12 14:00:00', end: '2016-02-12 15:00:00')
+    slt1 = sch1.slots.create!(begin: beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
+    slt2 = sch1.slots.create!(begin: beginning_of_week.change(:hour => 17, :min => 00, :sec => 0), end: beginning_of_week.change(:hour => 17, :min => 30, :sec => 0))
+    slt3 = sch1.slots.create!(begin: beginning_of_week.tomorrow.change(:hour => 13, :min => 30, :sec => 0), end: beginning_of_week.tomorrow.change(:hour => 14, :min => 0, :sec => 0))
+    slt4 = sch1.slots.create!(begin: beginning_of_week.tomorrow.change(:hour => 14, :min => 00, :sec => 0), end: beginning_of_week.tomorrow.change(:hour => 14, :min => 30, :sec => 0))
 
     # Create second schedule for another worker profile of the same user
-    sch2 = wo6.schedules.create!(begin: '2016-02-11 10:00:00', end: '2015-02-18 10:00:00' )
+    sch2 = wo6.schedules.create!(begin: today.beginning_of_week, end: today.end_of_week)
     # Create slots for this schedule
-    slt5 = sch2.slots.create!(begin: '2016-02-11 11:30:00', end: '2016-02-10 12:00:00')
-    slt6 = sch2.slots.create!(begin: '2016-02-11 12:00:00', end: '2016-02-10 12:30:00')
-    slt7 = sch2.slots.create!(begin: '2016-02-13 07:30:00', end: '2016-02-13 08:00:00')
+    slt5 = sch2.slots.create!(begin: beginning_of_week.change(:hour => 14, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 15, :min => 0, :sec => 0))
+    slt6 = sch2.slots.create!(begin: beginning_of_week.change(:hour => 15, :min => 0, :sec => 0), end: beginning_of_week.change(:hour => 15, :min => 30, :sec => 0))
+    slt7 = sch2.slots.create!(begin: beginning_of_week.tomorrow.tomorrow.change(:hour => 8, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 9, :min => 0, :sec => 0))
 
     # Add lof events to be mapped to the created schedules
     wo1.log_events.create!(workstation_id: ws1.id, happened_at: '2016-02-11 10:30:00', worker_role: 'PROCEDURAL ENROUTE', worker_responsability: 'DEPARTURE', operational_status: 'MRC')
