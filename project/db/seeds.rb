@@ -25,7 +25,7 @@ ActiveRecord::Base.transaction do
     atco2 = role_acto.users.create(first_name: 'Marie', name: 'Rouana', email: 'mrouana@gmail.com', password:'mrouana', password_confirmation:'mrouana')
     atco3 = role_acto.users.create(first_name: 'Milene', name: 'Micoton', email: 'mmicoton@gmail.com', password:'mmicoton', password_confirmation:'mmicoton')
     atco4 = role_acto.users.create(first_name: 'Anna', name: 'Conda', email: 'aconda@gmail.com', password:'aconda', password_confirmation:'aconda')
-    atco5 = role_acto.users.create(first_name: 'Aude', name: 'Javel', email: 'ajaval@gmail.com', password:'ajaval', password_confirmation:'ajaval')
+    atco5 = role_acto.users.create(first_name: 'Aude', name: 'Javel', email: 'ajavel@gmail.com', password:'ajavel', password_confirmation:'ajavel')
 
     # Create 2 facilities
     f1 = Facility.create!(name: 'Nordica 2', pub_id: '123')
@@ -39,17 +39,17 @@ ActiveRecord::Base.transaction do
     # Create ATCO's worker profiles - one ATCO has several worker profiles on different facilities
     wo1 = atco1.worker_profiles.create!(first_name: atco1.first_name, name: atco1.name, facility_id: f1.id, pub_id: '2101')
     wo2 = atco2.worker_profiles.create!(first_name: atco2.first_name, name: atco2.name, facility_id: f1.id, pub_id: '2102')
-    wo3 = atco3.worker_profiles.create!(first_name: atco3.first_name, name: atco3.name, facility_id: f1.id,  pub_id: '2103')
+    wo3 = atco3.worker_profiles.create!(first_name: atco3.first_name, name: atco3.name, facility_id: f1.id, pub_id: '2103')
     wo4 = atco4.worker_profiles.create!(first_name: atco4.first_name, name: atco4.name, facility_id: f1.id, pub_id: '2104')
-    wo5 = atco5.worker_profiles.create!(first_name: atco5.first_name, name: atco4.name, facility_id: f1.id, pub_id: '2105')
+    wo5 = atco5.worker_profiles.create!(first_name: atco5.first_name, name: atco5.name, facility_id: f1.id, pub_id: '2105')
     wo6 = atco1.worker_profiles.create!(first_name: atco1.first_name, name: atco1.name, facility_id: f2.id, pub_id: '2243')
     
     today = Date.today.to_time
     beginning_of_week = today.beginning_of_week
     # Create shifts over several period on several facilities.
-    sft1 = f1.shifts.create!(begin: today.beginning_of_month, end: today.beginning_of_month.next_month)
-    sft2 = f1.shifts.create!(begin: today.beginning_of_month, end: today.beginning_of_month.next_month)
-    sft3 = f2.shifts.create!(begin: today.beginning_of_month, end: today.beginning_of_month.next_month)
+    sft1 = f1.shifts.create!(begin: today.beginning_of_month, end: today.end_of_month)
+    sft2 = f1.shifts.create!(begin: today.beginning_of_month.next_month, end: today.end_of_month.next_month)
+    sft3 = f2.shifts.create!(begin: today.beginning_of_month, end: today.end_of_month)
 
     # Assign worker profile to shifts. The worker profile must be assign on shift in their facility
     # WARNING: No worker profile can be on shifts with overlapping period.

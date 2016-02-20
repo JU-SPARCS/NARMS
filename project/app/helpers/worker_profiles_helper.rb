@@ -2,12 +2,12 @@
 
 module Narms
   class App
-    module LogEventsHelper
+    module WorkerProfilesHelper
       # def simple_helper_method
       # ...
       # end
     end
 
-    helpers LogEventsHelper
+    helpers WorkerProfilesHelper
   end
 end

@@ -29,6 +29,8 @@
                   = k
           %ul.nav.navbar-nav.navbar-right
             - if current_user
+              %li
+                %span.navbar-text= "Welcome #{current_user.first_name} #{current_user.name}"
               %li.dropdown
                 %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                   %span.glyphicon.glyphicon-tint{"aria-hidden" => "true"}
@@ -48,7 +50,9 @@
                   %li.divider
                   %li
                     =button_to :logout, url(:login, :index), :method => :delete, :class => 'navbar-nav-form text-center' do
-                      Logout
+                      logout
+
+      = yield_content :breadcrumb
 
     .container
       = yield_content :container
