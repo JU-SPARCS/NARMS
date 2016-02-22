@@ -6,21 +6,8 @@
 = content_for :container do
 
   %h1 Current Schedule
-  .row
-    - if @current_schedules == nil || @current_schedules.size == 0
+  - if @current_schedules == nil || @current_schedules.size == 0
+    .row
       .alert.alert-info You have been assigned to no facility this week.
-    - else
-      .col-lg-9
-        = partial "/base/schedule_table_days.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }
-      .col-lg-3
-        .panel.panel-default
-          .panel-heading
-            %h3 Facilities
-            %h3.small Here are the facilities you are working in this week. Select one of them to see more details.
-          %ul.list-group
-            - @current_schedules.each do |schedule|
-              = link_to "/worker_profiles/#{schedule.worker_profile.id}/schedules" do
-                %li.list-group-item
-                  %span= schedule.worker_profile.facility.name
-                  .glyphicon.glyphicon-chevron-right.pull-right
-                  .badge.pull-right= schedule.slots.size
+  - else
+    = partial "/base/schedule_table_days_with_facilities.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }

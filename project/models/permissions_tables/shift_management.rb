@@ -21,5 +21,6 @@ class PermissionsTables::ShiftManagement < ActiveRecord::Base
   enumerize :prepare_shift_schedule,             :in => PERMISSIONS_LEVELS
   enumerize :view_atco_safaps_shift_inputs,      :in => PERMISSIONS_LEVELS
   enumerize :view_atco_safaps_shift_assessments, :in => PERMISSIONS_LEVELS
-  enumerize :manage_atco_safaps_categories,      :in => PERMISSIONS_LEVELS
+  enumerize :view_atco_worker_schedule,          :in => PERMISSIONS_LEVELS
+  enumerize :view_atco_worker_log_event,	     :in => PERMISSIONS_LEVELS
 end

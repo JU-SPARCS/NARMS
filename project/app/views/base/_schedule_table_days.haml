@@ -12,7 +12,7 @@
       %tr.active
         %th
           / Initialize default starting time if not defined
-          - if defined? start_at == nil
+          - if start_at == nil
             - start_at = Date.today.beginning_of_week.to_time
           / For each day write the days in the heading
           - (0..6).each do |i|
@@ -36,8 +36,13 @@
             - slots_for_time.each do |slot|
               - if slot != nil
                 %td.text-center
-                  %strong ER1 (not impl)
-                  .small= slot.schedule.worker_profile.facility.name                  
+                  - if current_user.is_authorized_to_perform_on_worker_profile("view_atco_worker_log_event", slot.schedule.worker_profile)
+                    = link_to "/worker_profiles/#{slot.schedule.worker_profile.id}/schedules/#{slot.schedule.id}##{slot.begin.strftime("%^A")}" do
+                      %strong ER1 (not impl
+                      .small= slot.schedule.worker_profile.facility.name   
+                  - else
+                    %strong ER1 (not impl)
+                    .small= slot.schedule.worker_profile.facility.name                  
               - else
                 %td{:align => "center"}
         - else

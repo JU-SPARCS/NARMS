@@ -29,20 +29,24 @@
         = "You have been assigned to no shift between #{@start_at.strftime("%-d/%-m")} and #{@end_at.strftime("%-d/%-m")}."
     - else
       - @shifts.each do |shift|
-        .row
-          .col-lg-2
-            .panel.panel-info
-              .panel-heading
-                %h4.text-center
-                  = "Shift #{shift.name}"
-                %h4.text-center.small
-                  = "N° #{shift.id}"
-              .panel-body.text-center
-                = "#{shift.begin.strftime("%d/%m")} - #{shift.end.strftime("%d/%m")}"
-          - schedules = get_schedules_from_worker_profile @worker_profile, shift.begin, shift.end
-          .col-lg-10
-            - if schedules != nil && schedules.size != 0
-              = partial "/base/schedule_table_days.haml", :locals => { schedules: schedules, start_at: @start_at.beginning_of_week }
-            - else
-              .alert.alert-info 
-                = "No planned schedule for this shift yet."
+        - shift_displayed = false
+        - schedules = @worker_profile.get_schedules_over_period(shift.begin, shift.end)
+        - if schedules != nil && schedules.size != 0
+          - schedules.each do |schedule|
+            .row
+              .col-lg-2
+                - if shift_displayed == false
+                  - shift_displayed = true
+                  .panel.panel-info
+                    .panel-heading
+                      %h4.text-center
+                        = "Shift #{shift.name}"
+                      %h4.text-center.small
+                        = "N° #{shift.id}"
+                    .panel-body.text-center
+                      = "#{shift.begin.strftime("%d/%m")} - #{shift.end.strftime("%d/%m")}"
+              .col-lg-10
+                = partial "/base/schedule_table_days.haml", :locals => { schedules: Array(schedule), start_at: schedule.begin }
+        - else
+          .alert.alert-info 
+            = "No planned schedule for this shift yet."

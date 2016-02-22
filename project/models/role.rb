@@ -19,7 +19,11 @@ class Role < ActiveRecord::Base
   validates_presence_of :name
 
   # Callbacks
-  after_save :create_shift_management_permissions_table_if_missing
+  #after_save :create_shift_management_permissions_table_if_missing
+
+  def get_permissions()
+    :shift_management_permissions_table
+  end
 
   private
 

@@ -1,0 +1,29 @@
+/ This partial view shows a schedule over one week showing the week days and shift every 30 minutes.
+/ 
+  Required Parameters:
+  * schedules Array("Schedules::Worker")  It contains all the slots to fit in the schedule.
+/ 
+  Optional Parameters:
+  * start_at  Time                        It is the date of day to start the schedule with. By default, start_at = Date.today.beginning_of_week
+
+.row
+  .col-lg-9
+    = partial "/base/schedule_table_days.haml", :locals => { schedules: schedules, start_at: Date.today.beginning_of_week.to_time }
+  .col-lg-3
+    .panel.panel-default
+      .panel-heading
+        %h3 Facilities
+        %h3.small Here are the facilities you are working in this week. Select one of them to see more details.
+      %ul.list-group
+        - schedules.each do |schedule|
+          - if current_user.is_authorized_to_perform_on_worker_profile("view_atco_worker_schedule", schedule.worker_profile)
+            = link_to "/worker_profiles/#{schedule.worker_profile.id}/schedules" do
+              %li.list-group-item
+                %span= schedule.worker_profile.facility.name
+                .glyphicon.glyphicon-chevron-right.pull-right
+                .badge.pull-right= schedule.slots.size
+          - else
+            %li.list-group-item
+              %span= schedule.worker_profile.facility.name
+              .badge.pull-right= schedule.slots.size
+
