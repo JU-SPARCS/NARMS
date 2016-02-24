@@ -11,6 +11,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  facility_id   :integer
+#  user_id       :integer
 #
 
 require 'spec_helper'
