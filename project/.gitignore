@@ -7,3 +7,4 @@ vendor/gems/*
 db/*.db
 .*.sw*
 .env*
+unicorn.rb

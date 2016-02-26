@@ -1,0 +1,144 @@
+User
+  The usual stuff for a user. Email, password etc.
+  A user is linked to
+    - a Role
+    - several WorkerProfile (optional)
+    - several ThirdParty::Provider::User (optional)
+        For example, it can be linked to a SAFAPS user token to
+        perform queries
+
+Role
+  This model exists to abstract from the code all the permission
+  verification. Instead of having, for example, a 'switch' for each
+  role containing 'if' statements, we end with only a few 'if'.
+  It is also easier to maintain :
+    Want to create a new role?
+      Instead of recoding everything for this role,
+      just create a new record in base!
+    Want to change permissions for a role?
+      Instead of modifying throw the entire code the permission,
+      just change it live using the record!
+  A role is linked to
+    - several User (optional)
+    - an AuditsPermissionsTable (mandatory)
+    - an ATCOAdministrationPermissionsTable (mandatory)
+    - a ShiftManagementPermissionsTable (mandatory)
+    - a ComplianceBreachPermissionsTable (mandatory)
+    - a LoggingAndComplianceCheckingPermissionsTable (mandatory)
+
+*PermissionsTable
+  It is a container to regroup every permissions related to the
+  same domain. Its purpose is only to clarify the use of permissions.
+  A *PermissionsTable is linked to
+    - a Role (mandatory)
+
+WorkerProfile
+  This model is the direct representation of someone who has to use
+  his identification card/device when working in a facility.
+  A user can have several WorkerProfile since an ATCO, for example,
+  can move from a facility to another.
+  A WorkerProfile is linked to
+    - a User (mandatory)
+    - a Facility (mandatory)
+    - several Shift (optional)
+    - several LogEvent (optional)
+    - several WorkerSchedule (optional)
+
+Shift
+  This model is for the moment a way to represent a group of
+  WorkerProfile as favorites/easy-picked-profiles for a shift manager.
+  In case shifts should be evaluated as groups of workers for a
+  period of time, the transformation of this model will consist only
+  in the creating of two new DateTime fields 'start' and 'end'.
+  A Shift is linked to
+    - several WorkerProfile (mandatory, shift manager the first)
+    - a Facility (mandatory)
+
+Facility
+  It represents the physical facility and is used to keep every
+  entity based on this place linked.
+  A Facility is linked to
+    - several WorkerProfile (optional)
+    - several Shift (optional)
+    - several Workstation (optional)
+    - several ThirdParty::Provider::Organization (optional)
+    - a ThirdParty::Recipient::User (mandatory)
+
+Workstation
+  It represents the physical workstation. This model exists because
+  it lightweights the LogEvent records (we don't need to save for each
+  of those recods the name of the workstation) and allow us to keep
+  trace of its use throw a WorkstationSchedule model.
+  A Workstation is linked to
+    - several LogEvent (optional)
+    - several WorkstationSchedule (optional)
+    - a Facility (mandatory)
+
+LogEvent
+  These records are the reason why this project exists : to keep trace
+  of the movements of the workers between the workstations.
+  A LogEvent is linked to
+    - a WorkerProfile (mandatory)
+    - a Workstation (mandatory)
+
+WorkerSchedule
+  A WorkerSchedule is a range of time for which the worker will have
+  several positions to guard.
+  In a later version, records should be able to be created from existing
+  LogEvent to perform SAFAPS assessments in case of audits. The solution
+  to this evolution could be a single boolean 'made_afterward'.
+  A WorkerSchedule is linked to
+    - a WorkerProfile (mandatory)
+    - a WorkstationSchedule (optional)
+    - several SAFAPS::Profile (optional)
+
+WorkstationSchedule
+  A WorkstationSchedule is a range of time for which the workstation
+  is used by a worker.
+  A WorkstationSchedule is linked to
+    - several WorkerSchedule (mandatory, 1..2)
+    - a Workstation (mandatory)
+
+SAFAPS::
+  Namespace relative to every models exclusively related to SAFAPS.
+
+SAFAPS::Profile
+  This model represents SAFAPS assessments. It keeps linked both the
+  requests and the responses corresponding to a schedule.
+  A SAFAPS::Profile is linked to
+    - a WorkerSchedule (mandatory)
+    - a SAFAPS::ProfileRequest (mandatory)
+    - a SAFAPS::ProfileResponse (optional)
+    - a SAFAPS::UserConsumption (mandatory)
+
+SAFAPS::ProfileRequest
+  This model keeps trace of the request made for a SAFAPS::Profile.
+  Its main purpose is to keep trace of the data sent for debuging
+  trace (regarding the provider) and to solve possible facturation
+  issues (still with the provider).
+  A SAFAPS::ProfileRequest is linked to
+    - a SAFAPS::Profile (mandatory)
+
+SAFAPS::ProfileResponse
+  This model keeps trace of the responses made for a SAFAPS::Profile.
+  Its main purpose is to keep trace of the data received for debuging
+  trace (regarding the provider) and to solve possible facturation
+  issues (still with the provider).
+  A SAFAPS::ProfileResponse is linked to
+    - a SAFAPS::Profile (mandatory)
+
+ThirdParty::
+  Namespace relative to external systems maintaining communications
+  with our own.
+
+ThirdParty::Provider::
+  Namespace relative to external systems used by our own.
+  This is possible using authentication tokens defined by the provider.
+
+ThirdParty::Recipient::
+  Namespace relative to external systems using our own.
+  This is possible using authentication tokens that we defined for the
+  external systems.
+
+ThirdParty::Provider
+  
