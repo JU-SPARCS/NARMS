@@ -17,6 +17,7 @@ ruby '2.2.3'
 gem 'rake'
 gem 'dotenv'
 gem 'annotate'
+gem 'unicorn'
 
 # Component requirements
 gem 'bcrypt'
