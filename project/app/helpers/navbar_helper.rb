@@ -12,7 +12,7 @@ module Narms
         if current_user
           tabs = {
             # Tabs to put in the navbar. 
-            'Home' => '/base',
+            'Home' => '/',
             'Schedules' => '/schedules',
             'Working Places' => '/worker_profiles'
           }
