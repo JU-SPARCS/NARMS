@@ -51,6 +51,65 @@ class User < ActiveRecord::Base
     active
   end
 
+  # These functions check whether a user can perform an action.
+  # Some actions are performed on entities like worker_profile or shift
+  # For example, "see the schedule" or "conduct a SAFAPS assesement"
+  # implies a worker profile. Yet, "prepare_shift_schedule" implies a shift .
+  def is_authorized_to_perform(action)
+    permission = role.shift_management_permissions_table.read_attribute(:"#{action}")
+    return permission != :nobody
+  end
+
+  def is_authorized_to_perform_on_worker_profile(action, worker_profile)
+    permission = role.shift_management_permissions_table.read_attribute(:"#{action}")
+    if (permission == "nobody") then
+      return false
+    end
+    #Padrino::Logger.logger.add(:debug, permission)
+    if (permission == "self") then
+      return worker_profiles.where(:id => worker_profile.id).exists?
+    end
+
+
+    if (permission == "shift") then
+      worker_profiles.each do |wp|
+        # Get the shift that have not finished
+        current_shifts = wp.shifts.where("end > ?", Time.now)
+        current_shifts.each do |shift|
+          if (shift.worker_profiles.where(:id => worker_profile.id).exists?) then
+            return true
+          end
+        end
+      end
+
+      return false
+    end
+
+    return false
+  end
+
+  def is_authorized_to_perform_on_shift(action, shift)
+    permission = role.shift_management_permissions_table.read_attribute(:"#{action}")
+    if (permission == "nobody") then
+      return false
+    end
+
+    if (permission == "self") then
+      return false
+    end
+    
+    if (permission == "shift") then
+      worker_profiles.each do |worker_profile|
+        # Get the shift that have not finished
+        return worker_profile.shifts.where(:id => shift.id).exists?
+      end
+
+      return false
+    end
+
+    return false
+  end
+
   private
 
   def encrypt_password

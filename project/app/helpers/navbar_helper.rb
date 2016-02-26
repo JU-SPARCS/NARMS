@@ -2,7 +2,7 @@
 
 module Narms
   class App
-    module LogEventsHelper
+    module NavBarHelper
 
       # Depending on the role of the User, the navigation bar will look differently.
       # This method returns the tabs that a User can see, in the format of a map with (key,value) pairs
@@ -11,10 +11,10 @@ module Narms
         tabs = {}
         if current_user
           tabs = {
+            # Tabs to put in the navbar. 
             'Home' => '/base',
-            'Shifts' => '/shifts',
-            'My Schedules' => '/worker_schedules',
-            'My Log Events' => '/log_events'
+            'Schedules' => '/schedules',
+            'Working Places' => '/worker_profiles'
           }
         end
 
@@ -43,6 +43,6 @@ module Narms
 
     end
 
-    helpers LogEventsHelper
+    helpers NavBarHelper
   end
 end

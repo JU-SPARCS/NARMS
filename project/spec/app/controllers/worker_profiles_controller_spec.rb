@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe "/log_events" do
+RSpec.describe "/worker_profiles" do
   pending "add some examples to #{__FILE__}" do
     before do
-      get "/log_events"
+      get "/worker_profiles"
     end
 
     it "returns hello world" do

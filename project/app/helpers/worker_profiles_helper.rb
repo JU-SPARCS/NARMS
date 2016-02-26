@@ -14,8 +14,16 @@
 #  user_id       :integer
 #
 
-require 'spec_helper'
+# Helper methods defined here can be accessed in any controller or view in the application
 
-RSpec.describe WorkerProfile do
-  pending "add some examples to (or delete) #{__FILE__}"
+module Narms
+  class App
+    module WorkerProfilesHelper
+      # def simple_helper_method
+      # ...
+      # end
+    end
+
+    helpers WorkerProfilesHelper
+  end
 end

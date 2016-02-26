@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 15) do
+ActiveRecord::Schema.define(version: 16) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 15) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role_id",                            limit: 4
+    t.string   "view_atco_worker_schedule",          limit: 255
+    t.string   "view_atco_worker_log_event",         limit: 255
   end
 
   add_index "permissions_tables_shift_managements", ["role_id"], name: "index_permissions_tables_shift_managements_on_role_id", using: :btree

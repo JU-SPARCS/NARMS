@@ -1,0 +1,24 @@
+/ This view present the schedules for all worker profiles
+/ 
+  Required Parameters:
+  * @schedule  "Schedules::Worker" It contains the schedule for the current week
+  * @log_events Array("LogEvent")   It contains all the log events for the current week for this worker_profile
+
+= content_for :breadcrumb do
+  %ol.breadcrumb
+    %li
+      = link_to "/base" do
+        = "Home"
+    %li
+      = link_to "/worker_profiles" do
+        = "Working Places"
+    %li
+      = link_to "/worker_profiles/#{@schedule.worker_profile.id}/schedules" do
+        = @schedule.worker_profile.facility.name
+    %li.active
+      = "#{@schedule.begin.strftime("%-d/%-m")} - #{@schedule.end.strftime("%-d/%-m")}"
+
+= content_for :container do
+
+  %h1 Detailed Schedule
+  %span Not implemented yet

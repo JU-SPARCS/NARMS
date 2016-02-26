@@ -1,0 +1,52 @@
+/ This view present all facilities of the workers
+/ 
+  Required Parameters:
+  * @worker_profile WorkerProfile   It contains the worker profile that the schedules are displayed
+  * @shift          Array("Shift")  It contains all shifts of the worker profile such as start_at < end: and end_at > begin:
+/ 
+  Optional Parameters:
+  * @start_at        Time           It is the date of day to start the schedules with. By default, start_at = Date.today.beginning_of_week
+  * @end_at          Time           It is the date of day to end the schedules with. By default, end_at = Date.today.beginning_of_week.next_month
+
+
+= content_for :breadcrumb do
+  %ol.breadcrumb
+    %li
+      = link_to "/base" do
+        = "Home"
+    %li
+      = link_to "/worker_profiles" do
+        = "Working Places"
+    %li.active
+      = @worker_profile.facility.name
+
+= content_for :container do
+
+  %h1= @worker_profile.facility.name
+  .row
+    - if @shifts == nil || @shifts.size == 0
+      .alert.alert-info 
+        = "You have been assigned to no shift between #{@start_at.strftime("%-d/%-m")} and #{@end_at.strftime("%-d/%-m")}."
+    - else
+      - @shifts.each do |shift|
+        - shift_displayed = false
+        - schedules = @worker_profile.get_schedules_over_period(shift.begin, shift.end)
+        - if schedules != nil && schedules.size != 0
+          - schedules.each do |schedule|
+            .row
+              .col-lg-2
+                - if shift_displayed == false
+                  - shift_displayed = true
+                  .panel.panel-info
+                    .panel-heading
+                      %h4.text-center
+                        = "Shift #{shift.name}"
+                      %h4.text-center.small
+                        = "N° #{shift.id}"
+                    .panel-body.text-center
+                      = "#{shift.begin.strftime("%d/%m")} - #{shift.end.strftime("%d/%m")}"
+              .col-lg-10
+                = partial "/base/schedule_table_days.haml", :locals => { schedules: Array(schedule), start_at: schedule.begin }
+        - else
+          .alert.alert-info 
+            = "No planned schedule for this shift yet."

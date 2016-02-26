@@ -1,0 +1,57 @@
+/ This partial view shows a schedule over one week showing the week days and shift every 30 minutes.
+/ 
+  Required Parameters:
+  * schedules Array("Schedules::Worker")  It contains all the slots to fit in the schedule.
+/ 
+  Optional Parameters:
+  * start_at  Time                        It is the date of day to start the schedule with. By default, start_at = Date.today.beginning_of_week
+
+.table-responsive
+  %table.table.table-condensed.table-bordered
+    %thead
+      %tr.active
+        %th
+          / Initialize default starting time if not defined
+          - if start_at == nil
+            - start_at = Date.today.beginning_of_week.to_time
+          / For each day write the days in the heading
+          - (0..6).each do |i|
+            %th
+              .text-center.text-muted.small
+                = (start_at + i*60*60*24).strftime("%A  %-d/%-m")
+    %tbody
+
+      - last_row_displayed = false
+      - slots_to_display = slots_over_week schedules, start_at
+      - time = Time.new(start_at.year, start_at.month, start_at.day, 00, 00)
+
+      - slots_to_display.each do |slots_for_time|
+        - if slots_for_time != nil
+          - last_row_displayed = true
+          %tr
+            %td.active
+              .text-center.text-muted
+                %strong.small
+                  = time.strftime("%H:%M")
+            - slots_for_time.each do |slot|
+              - if slot != nil
+                %td.text-center
+                  - if current_user.is_authorized_to_perform_on_worker_profile("view_atco_worker_log_event", slot.schedule.worker_profile)
+                    = link_to "/worker_profiles/#{slot.schedule.worker_profile.id}/schedules/#{slot.schedule.id}##{slot.begin.strftime("%^A")}" do
+                      %strong ER1 (not impl
+                      .small= slot.schedule.worker_profile.facility.name   
+                  - else
+                    %strong ER1 (not impl)
+                    .small= slot.schedule.worker_profile.facility.name                  
+              - else
+                %td{:align => "center"}
+        - else
+          - if last_row_displayed == true
+            - last_row_displayed = false
+            - (0..1).each do |j|
+              %tr
+                %td.active
+                - (0..6).each do |i|
+                  %td
+        - time += 60*30 
+
