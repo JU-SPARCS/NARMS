@@ -14,7 +14,7 @@ module Narms
       end
 
       def current_user
-        login_from_session
+        @current_user || login_from_session
       end
 
       def signed_in?
