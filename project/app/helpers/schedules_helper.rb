@@ -2,12 +2,9 @@
 
 module Narms
   class App
-    module LogEventsHelper
-      # def simple_helper_method
-      # ...
-      # end
+    module SchedulesHelper
     end
 
-    helpers LogEventsHelper
+    helpers SchedulesHelper
   end
 end

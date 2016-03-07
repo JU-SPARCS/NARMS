@@ -1,0 +1,13 @@
+/ This view is the home page for any ATCO.
+/ 
+  Required Parameters:
+  * @current_schedules Array("Schedules::Worker") It contains the current schedules for all the worker profiles such as begin: < Time.now < end:).
+
+= content_for :container do
+
+  %h1 Current Schedule
+  - if @current_schedules == nil || @current_schedules.size == 0
+    .row
+      .alert.alert-info You have been assigned to no facility this week.
+  - else
+    = partial "/base/schedule_table_days_with_facilities.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }

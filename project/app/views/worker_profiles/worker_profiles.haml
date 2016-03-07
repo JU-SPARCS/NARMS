@@ -1,0 +1,56 @@
+/ This view present all facilities of the workers
+/ 
+  Required Parameters:
+  * @worker_profiles_up   Array("WorkerProfile")  It contains all the worker profiles of the user still active
+  * @worker_profiles      Array("WorkerProfile")  It contains all the worker profiles of the user
+
+= content_for :breadcrumb do
+  %ol.breadcrumb
+    %li
+      = link_to "/" do
+        = "Home"
+    %li.active
+      = "Working Places"
+
+= content_for :container do
+
+  %h1 Facilities
+
+  - if @worker_profiles == nil || @worker_profiles.size == 0
+    .row
+      .alert.alert-info You have not worked in any facility yet.
+  - else
+    .row.col-lg-12
+      .panel.panel-default
+        .panel-heading
+          %h3 Actual
+          - if @worker_profiles_up != nil && @worker_profiles_up.size != 0
+            %h3.small Here are the facilities you are currently working or will work in
+
+        - if @worker_profiles_up == nil || @worker_profiles_up.size == 0
+          .panel-body
+            .alert.alert-info No work has been planned in any facility in the future.
+        - else 
+          %ul.list-group
+            - @worker_profiles_up.each do |worker_profile|
+              = link_to "/worker_profiles/#{worker_profile.id}/schedules" do
+                %li.list-group-item
+                  %span= worker_profile.facility.name
+                  .glyphicon.glyphicon-chevron-right.pull-right
+
+      .panel.panel-default
+        .panel-heading
+          %h3 History
+          - if @worker_profiles != nil && @worker_profiles.size != 0
+            %h3.small Here is the history of the facilities you have ever worked in
+
+        - if @worker_profiles == nil || @worker_profiles.size == 0
+          .panel-body
+            .alert.alert-info You have not worked in any facility yet.
+        - else 
+          %ul.list-group
+            - @worker_profiles.each do |worker_profile|
+              = link_to "/worker_profiles/#{worker_profile.id}/schedules" do
+                %li.list-group-item
+                  %span= worker_profile.facility.name
+                  .glyphicon.glyphicon-chevron-right.pull-right

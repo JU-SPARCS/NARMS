@@ -25,4 +25,8 @@ class WorkerProfile < ActiveRecord::Base
   # Validations
 
   # Callbacks
+
+  def get_schedules_over_period(start_at, end_at)
+  	schedules.where("end > ? AND begin < ?", start_at, end_at).order(:begin)
+  end
 end

@@ -1,0 +1,18 @@
+/ This view present the schedules for all worker profiles
+/ 
+  Required Parameters:
+  * @worker_profiles  Array("WorkerProfile")      It contains the worker profiles of the user
+  * @schedules        Array("Schedules::Worker")  It contains all schedules for all the worker profiles such as begin: < Time.now < end:).
+
+= content_for :breadcrumb do
+  %ol.breadcrumb
+    %li
+      = link_to "/" do
+        = "Home"
+    %li.active
+      = "Schedules"
+
+= content_for :container do
+
+  %h1 Schedules
+  %span Not implemented yet
