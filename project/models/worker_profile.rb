@@ -15,6 +15,8 @@
 #
 
 class WorkerProfile < ActiveRecord::Base
+  include PublicIdentifier
+
   # Associations
   belongs_to :user, required: true
   belongs_to :facility, required: true
@@ -23,7 +25,6 @@ class WorkerProfile < ActiveRecord::Base
   has_many :log_events, class_name: Events::Log, dependent: :destroy
 
   # Validations
-
   # Callbacks
 
   def get_schedules_over_period(start_at, end_at)
