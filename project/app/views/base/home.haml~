@@ -11,4 +11,3 @@
       .alert.alert-info You have been assigned to no facility this week.
   - else
     = partial "/base/schedule_table_days_with_facilities.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }
-    = partial "/base/schedule_shift_current.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }

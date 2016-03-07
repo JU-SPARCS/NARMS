@@ -1,0 +1,8 @@
+// this partial is to draw a schedule of the current day of a shift manager
+
+.row
+  .col-lg-9
+    .panel.panel-default
+      .panel-heading
+      %h3 current schedule of your shift
+ 

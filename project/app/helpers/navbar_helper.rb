@@ -14,6 +14,7 @@ module Narms
             # Tabs to put in the navbar. 
             'Home' => '/',
             'Schedules' => '/schedules',
+            'Manage Shifts' => '/shifts',
             'Working Places' => '/worker_profiles'
           }
         end

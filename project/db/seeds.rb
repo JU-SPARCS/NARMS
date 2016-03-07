@@ -78,9 +78,19 @@ ActiveRecord::Base.transaction do
     sft3.worker_profiles << [wosm1_2, wo1_2]
 
     # Create a schedule for a worker profile
+    s1_1 = wosm2.schedules.create!(begin: today.beginning_of_week, end: today.end_of_week)
+    # Create slots for this schedule
+    slt1 = s1_1.slots.create!(begin: beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
+    slt12 = s1_1.slots.create!(begin: beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
+    slt2 = s1_1.slots.create!(begin: beginning_of_week.change(:hour => 17, :min => 00, :sec => 0), end: beginning_of_week.change(:hour => 17, :min => 30, :sec => 0))
+    slt3 = s1_1.slots.create!(begin: beginning_of_week.tomorrow.change(:hour => 13, :min => 30, :sec => 0), end: beginning_of_week.tomorrow.change(:hour => 14, :min => 0, :sec => 0))
+    slt4 = s1_1.slots.create!(begin: beginning_of_week.tomorrow.change(:hour => 14, :min => 00, :sec => 0), end: beginning_of_week.tomorrow.change(:hour => 14, :min => 30, :sec => 0))
+
+    # Create a schedule for a worker profile
     sch1_1 = wo1_1.schedules.create!(begin: today.beginning_of_week, end: today.end_of_week)
     # Create slots for this schedule
     slt1 = sch1_1.slots.create!(begin: beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
+    slt12 = sch1_1.slots.create!(begin: beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
     slt2 = sch1_1.slots.create!(begin: beginning_of_week.change(:hour => 17, :min => 00, :sec => 0), end: beginning_of_week.change(:hour => 17, :min => 30, :sec => 0))
     slt3 = sch1_1.slots.create!(begin: beginning_of_week.tomorrow.change(:hour => 13, :min => 30, :sec => 0), end: beginning_of_week.tomorrow.change(:hour => 14, :min => 0, :sec => 0))
     slt4 = sch1_1.slots.create!(begin: beginning_of_week.tomorrow.change(:hour => 14, :min => 00, :sec => 0), end: beginning_of_week.tomorrow.change(:hour => 14, :min => 30, :sec => 0))
@@ -89,6 +99,7 @@ ActiveRecord::Base.transaction do
     sch1_2 = wo1_1.schedules.create!(begin: today.next_week.beginning_of_week, end: today.next_week.end_of_week)
     # Create slots for this schedule
     slt5 = sch1_2.slots.create!(begin: today.next_week.beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: today.next_week.beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
+    slt13 = sch1_2.slots.create!(begin: today.next_week.beginning_of_week.change(:hour => 10, :min => 30, :sec => 0), end: today.next_week.beginning_of_week.change(:hour => 11, :min => 0, :sec => 0))
     slt6 = sch1_2.slots.create!(begin: today.next_week.beginning_of_week.change(:hour => 17, :min => 00, :sec => 0), end: today.next_week.beginning_of_week.change(:hour => 17, :min => 30, :sec => 0))
     slt7 = sch1_2.slots.create!(begin: today.next_week.beginning_of_week.tomorrow.change(:hour => 13, :min => 30, :sec => 0), end: today.next_week.beginning_of_week.tomorrow.change(:hour => 14, :min => 0, :sec => 0))
     slt8 = sch1_2.slots.create!(begin: today.next_week.beginning_of_week.tomorrow.change(:hour => 14, :min => 00, :sec => 0), end: today.next_week.beginning_of_week.tomorrow.change(:hour => 14, :min => 30, :sec => 0))
