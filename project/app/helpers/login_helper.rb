@@ -3,6 +3,7 @@ module Narms
     module LoginHelper
       def set_current_user(user)
         session[:user_id] = user ? user.id : nil
+        session[:role_id] = user ? user.role_id : nil
       end
 
       def blank_session?
@@ -15,6 +16,10 @@ module Narms
 
       def current_user
         @current_user || login_from_session
+      end
+
+      def shift_user
+        @shift_user = session[:role_id]
       end
 
       def signed_in?

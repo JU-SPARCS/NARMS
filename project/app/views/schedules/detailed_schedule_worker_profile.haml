@@ -20,5 +20,10 @@
 
 = content_for :container do
 
-  %h1 Detailed Schedule
-  %span Not implemented yet
+  //%h1 Detailed Schedule
+  //%span Not implemented yet
+  - if @current_schedules == nil || @current_schedules.size == 0
+    .row
+      .alert.alert-info You have been assigned to no facility this week.
+  - else
+    = partial "/schedules/delivered_schedule.haml", :locals => { schedules: @current_schedules, start_at: Date.today.beginning_of_week.to_time }

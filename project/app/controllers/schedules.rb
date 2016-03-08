@@ -3,7 +3,8 @@ Narms::App.controllers :schedules do
   # This method is called when a url of this form is used: /schedules.
   # Renders a list of the worker_profiles for the user
   get :index do
-    render '/schedules/schedules'
+    
+      render '/schedules/schedules'
   end
 
   # This method is called when a url of this form is used: /worker_profiles/:wp_id/schedules.
@@ -27,11 +28,30 @@ Narms::App.controllers :schedules do
   # Renders a schedule with the log events
   get :index, :with => :id, :parent => :worker_profiles do
     @schedule = Schedules::Worker.find_by_id params[:id]
+    date = Date.today
+    # Retrieve the worker profile of the current user
+    worker_profiles = WorkerProfile.where(user_id: current_user.id)
+
+    # Get the current schedule for all the profiles
+    worker_id = Array.new
+    worker_profiles.each do |profile|
+      worker_id.push(profile.id)
+    end
+    puts worker_id
+    @current_schedules = Schedules::Worker
+      .where(:worker_profile_id => worker_id)
+      .where("begin < ?", date)
+      .where("end > ?", date)
     if current_user.is_authorized_to_perform_on_worker_profile("view_atco_worker_log_event", @schedule.worker_profile) then
       render '/schedules/detailed_schedule_worker_profile'
     else
       halt 403
     end
+  end
+  
+  def sendTo
+
+    puts "oyuyouyouyouyoyuuy - - - - - - - - "
   end
 
 end

@@ -9,12 +9,21 @@ module Narms
       # where key is the tab name, and value is the tab link.
       def visible_tabs
         tabs = {}
-        if current_user
+        puts current_user
+        puts shift_user
+        if shift_user == 1
           tabs = {
             # Tabs to put in the navbar. 
             'Home' => '/',
             'Schedules' => '/schedules',
             'Manage Shifts' => '/shifts',
+            'Working Places' => '/worker_profiles'
+          }
+        else
+          tabs = {
+            # Tabs to put in the navbar. 
+            'Home' => '/',
+            'Schedules' => '/schedules',
             'Working Places' => '/worker_profiles'
           }
         end

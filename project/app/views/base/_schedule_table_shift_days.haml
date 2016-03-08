@@ -15,17 +15,19 @@
           - if start_at == nil
             - start_at = Date.today.beginning_of_week.to_time
           / For each day write the days in the heading
-          - (0..6).each do |i|
+          - (0..3).each do |index|
             %th
               .text-center.text-muted.small
-                = (start_at + i*60*60*24).strftime("%A  %-d/%-m")
+                //= (start_at + i*60*60*24).strftime("%A  %-d/%-m")
+                ATCO
+                = index
     %tbody
 
       - last_row_displayed = false
-      - slots_to_display = slots_over_week schedules, start_at
+      - slots_to_display = slots_over_week2 schedules, start_at
       - time = Time.new(start_at.year, start_at.month, start_at.day, 00, 00)
 
-      - slots_to_display.each do |slots_for_time|
+      - (slots_to_display).each do |slots_for_time|
         - if slots_for_time != nil
           - last_row_displayed = true
           %tr
@@ -42,17 +44,17 @@
                       .small= slot.schedule.worker_profile.facility.name   
                   - else
                     %strong ER1 (not impl)
-                    .small= slot.schedule.worker_profile.facility.name                 
+                    .small= slot.schedule.worker_profile.facility.name                  
               - else
                 %td{:align => "center"}
-                
+
         - else
           - if last_row_displayed == true
             - last_row_displayed = false
             - (0..1).each do |j|
               %tr
                 %td.active
-                - (0..6).each do |i|
+                - (0..3).each do |i|
                   %td
         - time += 60*30 
 

@@ -1,9 +1,11 @@
 // this partial is to draw a schedule of the current day of a shift manager
-
-.row
-  .col-lg-9
-    .panel.panel-default
-      .panel-heading
-        %h3 current schedule of your shift
-      = partial "/base/schedule_table_shift_days.haml", :locals => { schedules: schedules, start_at: Date.today.beginning_of_week.to_time }
- 
+- perm = @current_user.is_authorized_to_perform("view_shift_schedule")
+- puts "==== #{perm}"
+- if @current_user.role.name == "SHIFT_MANAGER"
+  .row
+    .col-lg-9
+      .panel.panel-default
+        .panel-heading
+          %h3 current schedule of your shift
+        = partial "/base/schedule_table_shift_days.haml", :locals => { schedules: schedules, start_at: Date.today.beginning_of_week.to_time }
+	 
