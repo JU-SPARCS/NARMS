@@ -14,7 +14,8 @@
       /   Send request to SAFAPS
       / = link_to "sendTo", :class => 'btn btn-default btn-md' do
       /   Send
-      %button#show-slots-logs-btn.btn.btn-info.send{:type => "submit"} SAFAPS S&F
+      - if @current_user.role.name == "SHIFT_MANAGER"
+        %button#show-slots-logs-btn.btn.btn-info.send{:type => "submit"} SAFAPS S&F
     %hr 
     .panel.panel-default
       .panel-heading
