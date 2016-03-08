@@ -11,6 +11,9 @@ module Narms
       redirect :login if @current_user.nil?
     end
 
+    get '/safaps-profile' do
+        redirect :safaps_profile
+    end
 
     ##
     # Caching support.

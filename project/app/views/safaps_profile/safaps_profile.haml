@@ -1,0 +1,22 @@
+= content_for :container do
+  %h1.text-capitalize
+    = "Safaps Profiles"
+    %h2
+    %table.table.table-striped.table-hover
+      %thead
+        %tr
+          %td.success.text-center{:colspan => "3"}
+          / = "Safaps Profiles"
+        %tr
+          %th #id_atco
+          %th Stress
+          %th Fatigue
+      %tbody
+        - @safaps_responses.each do |safaps_response|
+          %tr
+            %td
+              = safaps_response.id_evaluation
+            %td
+              = safaps_response.stress_indicator
+            %td
+              = safaps_response.fatigue_indicator

@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 17) do
+=======
+ActiveRecord::Schema.define(version: 19) do
+>>>>>>> 312e42a1fecf2370c2a65127efd302da32673832
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -63,7 +67,8 @@ ActiveRecord::Schema.define(version: 17) do
     t.string   "prepare_shift_schedule",             limit: 255, default: "nobody"
     t.string   "view_atco_safaps_shift_inputs",      limit: 255, default: "nobody"
     t.string   "view_atco_safaps_shift_assessments", limit: 255, default: "nobody"
-    t.string   "manage_atco_safaps_categories",      limit: 255, default: "nobody"
+    t.string   "view_atco_worker_schedule",          limit: 255, default: "nobody"
+    t.string   "view_atco_worker_log_event",         limit: 255, default: "nobody"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role_id",                            limit: 4
@@ -115,6 +120,29 @@ ActiveRecord::Schema.define(version: 17) do
 
   add_index "shifts_worker_profiles", ["shift_id"], name: "index_shifts_worker_profiles_on_shift_id", using: :btree
   add_index "shifts_worker_profiles", ["worker_profile_id"], name: "index_shifts_worker_profiles_on_worker_profile_id", using: :btree
+
+  create_table "third_parties_recipients", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "third_parties_recipients_organizations", force: :cascade do |t|
+    t.string   "name",         limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "recipient_id", limit: 4
+  end
+
+  create_table "third_parties_recipients_token_holders", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "token",            limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "organization_id",  limit: 4
+    t.integer  "tokenable_r_id",   limit: 4
+    t.string   "tokenable_r_type", limit: 255
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "pub_id",           limit: 255
