@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: third_parties_recipients_organizations
+#
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  recipient_id :integer
+#
+
 class ThirdParties::Recipient::Organization < ActiveRecord::Base
   # Associations
   belongs_to :recipient,

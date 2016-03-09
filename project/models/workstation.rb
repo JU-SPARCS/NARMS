@@ -12,6 +12,7 @@
 #
 
 class Workstation < ActiveRecord::Base
+  include PublicIdentifier
 
   # Associations
   belongs_to :facility, required: true

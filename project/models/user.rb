@@ -15,6 +15,8 @@
 #
 
 class User < ActiveRecord::Base
+  include PublicIdentifier
+
   attr_accessor :password, :password_confirmation
 
   # Associations
@@ -33,7 +35,6 @@ class User < ActiveRecord::Base
 
   # Callbacks
   before_save :encrypt_password, :if => :password_required
-  before_create :generate_pub_id
 
   ##
   # This method is for authentication purpose.
@@ -120,12 +121,5 @@ class User < ActiveRecord::Base
 
   def password_required
     crypted_password.blank? || password.present?
-  end
-
-  def generate_pub_id
-    self.pub_id = loop do
-      s = Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
-      break s unless self.class.exists?(pub_id: s)
-    end
   end
 end
