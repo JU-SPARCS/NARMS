@@ -11,6 +11,10 @@
         .col-lg-10
           %input#inputPassword.form-control{:name => "password", :placeholder => "Password", :type => "password"}
       .form-group
+        %label.col-lg-2.control-label{:id => "token", :for => "token"} Token
+        .col-lg-10
+          %input#inputString.form-control{:name => "token", :placeholder => "Token", :type => "string"}
+      .form-group
         .col-lg-10.col-lg-offset-2
           %button.btn.btn-primary{:id => "submit", :type => "submit"} Login
 
