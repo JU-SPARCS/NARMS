@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 23) do
+ActiveRecord::Schema.define(version: 25) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -102,16 +102,16 @@ ActiveRecord::Schema.define(version: 23) do
   end
 
   create_table "schedule_slots_workers", force: :cascade do |t|
-    t.datetime "begin"
-    t.datetime "end"
+    t.datetime "begin_at"
+    t.datetime "end_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "schedules_worker_id", limit: 4
   end
 
   create_table "schedules_workers", force: :cascade do |t|
-    t.datetime "begin"
-    t.datetime "end"
+    t.datetime "begin_at"
+    t.datetime "end_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "worker_profile_id", limit: 4
