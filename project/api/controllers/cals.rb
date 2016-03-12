@@ -5,14 +5,11 @@ Narms::Api.controllers :cals, map: 'cals/:facility_id' do
   end
 
   post :users do
-    # Not going to work since a worker_profile need to be linked
-    # to a user at the latest at its creation
-    #
-    # @facility.worker_profiles.create!(
-    #   name: params[:name],
-    #   first_name: params[:first_name],
-    #   date_of_birth: params[:date_of_birth]
-    # ).pub_id
+    @facility.worker_profiles.create!(
+      name: params[:name],
+      first_name: params[:first_name],
+      date_of_birth: params[:date_of_birth]
+    ).pub_id
   end
 
   post :workstations do
