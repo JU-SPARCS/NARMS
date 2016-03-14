@@ -3,8 +3,8 @@
 # Table name: schedule_slots_workers
 #
 #  id                  :integer          not null, primary key
-#  begin               :datetime
-#  end                 :datetime
+#  begin_at            :datetime
+#  end_at              :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
 #  schedules_worker_id :integer
