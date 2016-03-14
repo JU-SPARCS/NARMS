@@ -18,8 +18,8 @@ class ScheduleSlots::Worker < ActiveRecord::Base
     required: true
 
   # Validations
-  validates_presence_of :begin
-  validates_presence_of :end
+  validates_presence_of :begin_at
+  validates_presence_of :end_at
 
   # Callbacks
 
