@@ -23,6 +23,7 @@ Narms::Api.controllers :cals, map: 'cals/:facility_id' do
       worker_profile: WorkerProfile.find_by_pub_id(params[:user_id]),
       workstation: Workstation.find_by_pub_id(params[:workstation_id]),
       happened_at: params[:happened_at],
+      event_type: params[:event_type],
       worker_role: params[:worker_role],
       worker_responsability: params[:worker_responsability],
       operational_status: params[:operational_status]
