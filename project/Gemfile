@@ -37,6 +37,9 @@ gem 'padrino', '0.13.1'
 # Models fields
 gem 'enumerize'
 
+# Development
+gem 'awesome_print'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 

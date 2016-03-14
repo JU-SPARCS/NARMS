@@ -24,9 +24,9 @@ class Schedules::Worker < ActiveRecord::Base
   # Callbacks
 
   def map_slots_to_log_events
-    slots_and_logs = Hash.new[
-      slots.map { |s| [(s.begin_at..s.end_at), pair_slot_and_events(s)] }
-    ]
+    slots_and_logs = slots.map do |s|
+      [(s.begin_at..s.end_at), pair_slot_and_events(s)]
+    end.to_h
 
     worker_profile.log_events.where(happened_at: begin_at..end_at).find_each do |log|
       log_range = log.to_slot_time_range
