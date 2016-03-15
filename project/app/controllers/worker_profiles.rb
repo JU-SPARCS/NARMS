@@ -21,4 +21,5 @@ Narms::App.controllers :worker_profiles do
     render '/worker_profiles/worker_profiles'
   end
 
+
 end

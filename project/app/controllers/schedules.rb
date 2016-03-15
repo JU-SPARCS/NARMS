@@ -3,7 +3,7 @@ Narms::App.controllers :schedules do
   # This method is called when a url of this form is used: /schedules.
   # Renders a list of the worker_profiles for the user
   get :index do
-    
+    puts "here ... "
       render '/schedules/schedules'
   end
 
@@ -40,8 +40,8 @@ Narms::App.controllers :schedules do
     puts worker_id
     @current_schedules = Schedules::Worker
       .where(:worker_profile_id => worker_id)
-      .where("begin < ?", date)
-      .where("end > ?", date)
+      .where("begin_at < ?", date)
+      .where("end_at > ?", date)
     if current_user.is_authorized_to_perform_on_worker_profile("view_atco_worker_log_event", @schedule.worker_profile) then
       render '/schedules/detailed_schedule_worker_profile'
     else
@@ -49,8 +49,59 @@ Narms::App.controllers :schedules do
     end
   end
   
-  def sendTo
 
+  get :index, :with => :id do
+    puts "hellooooooo121221212 :DDDDDDDD"
+    
+  end
+
+  post :send do
+    puts 'zizizizizizi +++++++ '
+    
+    token = 'NEtKcVJ4VUtRUXd1S1BiTQ=='
+    url = ''
+    events = { "ResponseURL": "http://toto.fr",
+                  "Events": [
+                    {
+                      "TimeZone": "Europe/Paris",
+                      "StartTime": "2016-02-05 17:18:30",
+                      "EndTime": "2016-02-06 17:18:30",
+                      "ASMEnvironment": "T",
+                      "ControlTechnology": "R",
+                      "ControllerStatus": "MCS",
+                      "Traffic": "VL",
+                      "Equipment": "O",
+                      "Weather": "HD"
+                    },
+                    {
+                      "TimeZone": "Europe/Paris",
+                      "StartTime": "2016-02-05 17:18:30",
+                      "EndTime": "2016-02-06 17:18:30",
+                      "ASMEnvironment": "T",
+                      "ControlTechnology": "R",
+                      "ControllerStatus": "MCS",
+                      "Traffic": "H",
+                      "Equipment": "O",
+                      "Weather": "HD"
+                    }
+                  ]
+                }#Events.where(id: params[:event_ids])
+ 
+    Typhoeus.post(
+      "193.10.30.123/evaluations",
+      headers: {
+        'Content-Type' => 'application/json',
+        'Authorization' => token,
+      },
+      body: {
+        'ResponseURL' => url,
+        'Events' => events,
+      }.to_json
+    )
+    redirect 'worker_profiles/3/schedules/1'
+  end
+
+  def sendTo
     puts "oyuyouyouyouyoyuuy - - - - - - - - "
   end
 

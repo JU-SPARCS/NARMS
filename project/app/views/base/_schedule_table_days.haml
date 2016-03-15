@@ -37,7 +37,7 @@
               - if slot != nil
                 %td.text-center
                   - if current_user.is_authorized_to_perform_on_worker_profile("view_atco_worker_log_event", slot.schedule.worker_profile)
-                    = link_to "/worker_profiles/#{slot.schedule.worker_profile.id}/schedules/#{slot.schedule.id}##{slot.begin.strftime("%^A")}" do
+                    = link_to "/worker_profiles/#{slot.schedule.worker_profile.id}/schedules/#{slot.schedule.id}##{slot.begin_at.strftime("%^A")}" do
                       %strong ER1 (not impl
                       .small= slot.schedule.worker_profile.facility.name   
                   - else

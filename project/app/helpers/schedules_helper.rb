@@ -3,6 +3,9 @@
 module Narms
   class App
     module SchedulesHelper
+    	def sendTo
+          puts "*********************** YES ****"
+    	end
     end
 
     helpers SchedulesHelper

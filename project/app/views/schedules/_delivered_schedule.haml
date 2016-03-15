@@ -15,143 +15,170 @@
       / = link_to "sendTo", :class => 'btn btn-default btn-md' do
       /   Send
       - if @current_user.role.name == "SHIFT_MANAGER"
-        %button#show-slots-logs-btn.btn.btn-info.send{:type => "submit"} SAFAPS S&F
+        = form_tag '/schedules/send', :method =>'post', :class => 'form-horizontal col-lg-6 center-block' do
+          %button#show-slots-logs-btn.btn.btn-info.bottom{:type => "submit"} SAFAPS
+
+      - slots = @schedule.map_slots_to_log_events()
+      - puts "avant"
+      - slots.each do | slot |
+        - puts slot[1]
+        - puts "--------------"
+      - puts "apres"
     %hr 
+
+
     .panel.panel-default
       .panel-heading
         %h3 Delivered schedule / Log events
       .panel-body
         .row
-          MONDAY
-        %br
-        .row
-          .col-sm-6
-            10h30 - 11h00
-            %br
-            ER1
-            %br
-            Brian
-          .col-sm-6
-            10h32 : log-in
-            %br
-            10h59 : log-out
-        %br
-        .row
-          .col-sm-6
-            13h30 - 14h00
-            %br
-            ER1
-            %br
-            Jean
-          .col-sm-6
-            13h31 : log-in
-            %br
-            13h45 : log-out
-            %br
-            13h31 : log-in
-            %br
-        %br
-        .row
-          .col-sm-6
-            14h00 - 14h30
-            %br
-            ER1
-            %br
-            Sara
-          .col-sm-6
-        %br
-        .row
-          .col-sm-6
-            17h00 - 17h30
-            %br
-            ER1
-            %br
-            Jean
-          .col-sm-6
-        %hr
-        .row
-          TUESDAY
-        %br
-        .row
-          .col-sm-6
-            10h30 - 11h00
-            %br
-            ER1
-            %br
-            Brian
-          .col-sm-6
-            10h32 : log-in
-            %br
-            10h59 : log-out
-        %br
-        .row
-          .col-sm-6
-            13h30 - 14h00
-            %br
-            ER1
-            %br
-            Michel
-          .col-sm-6
-            13h31 : log-in
-            %br
-            13h45 : log-out
-            %br
-            13h31 : log-in
-            %br
-        %br
-        .row
-          .col-sm-6
-            14h00 - 14h30
-            %br
-            ER1
-            %br
-            Sara
-          .col-sm-6
-        %br
-        .row
-          .col-sm-6
-            17h00 - 17h30
-            %br
-            ER1
-          .col-sm-6
-        %hr
-        .row
-          WEDNESDAY
-        %br
-        .row
-          .col-sm-6
-            10h30 - 11h00
-            %br
-            ER1
-          .col-sm-6
-            10h32 : log-in
-            %br
-            10h59 : log-out
-        %br
-        .row
-          .col-sm-6
-            13h30 - 14h00
-            %br
-            ER1
-          .col-sm-6
-            13h31 : log-in
-            %br
-            13h45 : log-out
-            %br
-            13h31 : log-in
-            %br
-        .row
-          .col-sm-6
-            14h00 - 14h30
-            %br
-            ER1
-          .col-sm-6
-        .row
-          .col-sm-6
-            17h00 - 17h30
-            %br
-            ER1
-          .col-sm-6
-        %hr
-= content_for :javascript do
-  = javascript_include_tag '/app/js/scheduleJS.js'
+          .col-lg-12
+          %table.table.table-striped.table-hover
+            %thead
+              %tr
+                %th Date-Hours Start
+                %th Date-Hours End
+                %th Log-events
+            %tbody
+              - slots.each do | sloti |
+                %tr
+                  %td 
+                    = sloti[1][:slot].begin_at
+                  %td 
+                    = sloti[1][:slot].end_at
+                  %td 
+                    = sloti[1][:events]
+/         .row
+/           MONDAY
+/         %br
+/         .row
+/           .col-sm-6
+/             10h30 - 11h00
+/             %br
+/             ER1
+/             %br
+/             Brian
+/           .col-sm-6
+/             10h32 : log-in
+/             %br
+/             10h59 : log-out
+/         %br
+/         .row
+/           .col-sm-6
+/             13h30 - 14h00
+/             %br
+/             ER1
+/             %br
+/             Jean
+/           .col-sm-6
+/             13h31 : log-in
+/             %br
+/             13h45 : log-out
+/             %br
+/             13h31 : log-in
+/             %br
+/         %br
+/         .row
+/           .col-sm-6
+/             14h00 - 14h30
+/             %br
+/             ER1
+/             %br
+/             Sara
+/           .col-sm-6
+/         %br
+/         .row
+/           .col-sm-6
+/             17h00 - 17h30
+/             %br
+/             ER1
+/             %br
+/             Jean
+/           .col-sm-6
+/         %hr
+/         .row
+/           TUESDAY
+/         %br
+/         .row
+/           .col-sm-6
+/             10h30 - 11h00
+/             %br
+/             ER1
+/             %br
+/             Brian
+/           .col-sm-6
+/             10h32 : log-in
+/             %br
+/             10h59 : log-out
+/         %br
+/         .row
+/           .col-sm-6
+/             13h30 - 14h00
+/             %br
+/             ER1
+/             %br
+/             Michel
+/           .col-sm-6
+/             13h31 : log-in
+/             %br
+/             13h45 : log-out
+/             %br
+/             13h31 : log-in
+/             %br
+/         %br
+/         .row
+/           .col-sm-6
+/             14h00 - 14h30
+/             %br
+/             ER1
+/             %br
+/             Sara
+/           .col-sm-6
+/         %br
+/         .row
+/           .col-sm-6
+/             17h00 - 17h30
+/             %br
+/             ER1
+/           .col-sm-6
+/         %hr
+/         .row
+/           WEDNESDAY
+/         %br
+/         .row
+/           .col-sm-6
+/             10h30 - 11h00
+/             %br
+/             ER1
+/           .col-sm-6
+/             10h32 : log-in
+/             %br
+/             10h59 : log-out
+/         %br
+/         .row
+/           .col-sm-6
+/             13h30 - 14h00
+/             %br
+/             ER1
+/           .col-sm-6
+/             13h31 : log-in
+/             %br
+/             13h45 : log-out
+/             %br
+/             13h31 : log-in
+/             %br
+/         .row
+/           .col-sm-6
+/             14h00 - 14h30
+/             %br
+/             ER1
+/           .col-sm-6
+/         .row
+/           .col-sm-6
+/             17h00 - 17h30
+/             %br
+/             ER1
+/           .col-sm-6
+/         %hr
+/ = content_for :javascript do
+/   = javascript_include_tag '/app/js/scheduleJS.js'

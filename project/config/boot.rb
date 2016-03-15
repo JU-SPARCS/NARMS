@@ -13,6 +13,7 @@ Dotenv.load ".env.#{Padrino.env}"
 
 # Load core extensions
 require "./core_ext/active_record_base"
+require './core_ext/time'
 
 ##
 # ## Enable devel logging

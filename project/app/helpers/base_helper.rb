@@ -22,7 +22,7 @@ module Narms
             display_row_for_a_time = false
             schedules.each do |schedule|
               schedule.slots.each do |slot|
-                if slot.begin == (time + (i * 60*60*24))
+                if slot.begin_at == (time + (i * 60*60*24))
                   slots_to_display_for_a_time.push(slot)
                   display_row_for_a_time = true
                   display_row = true
@@ -61,7 +61,7 @@ module Narms
             display_row_for_a_time = false
             schedules.each do |schedule|
               schedule.slots.each do |slot|
-                if slot.begin == (time + (i * 60*60*24))
+                if slot.begin_at == (time + (i * 60*60*24))
                   slots_to_display_for_a_time.push(slot)
                   display_row_for_a_time = true
                   display_row = true
