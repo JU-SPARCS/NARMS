@@ -13,6 +13,7 @@
 #  role_id                            :integer
 #  view_atco_worker_schedule          :string(255)
 #  view_atco_worker_log_event         :string(255)
+#  view_shift_schedule                :string(255)
 #
 
 class PermissionsTables::ShiftManagement < ActiveRecord::Base

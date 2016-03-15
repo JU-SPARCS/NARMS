@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 25) do
+ActiveRecord::Schema.define(version: 26) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 25) do
     t.datetime "updated_at"
     t.integer  "workstation_id",        limit: 4
     t.integer  "worker_profile_id",     limit: 4
+    t.string   "event_type",            limit: 255
   end
 
   add_index "events_logs", ["worker_profile_id"], name: "index_events_logs_on_worker_profile_id", using: :btree

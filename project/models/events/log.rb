@@ -11,6 +11,7 @@
 #  updated_at            :datetime
 #  workstation_id        :integer
 #  worker_profile_id     :integer
+#  event_type            :string(255)
 #
 
 class Events::Log < ActiveRecord::Base
