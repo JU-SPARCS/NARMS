@@ -34,10 +34,11 @@ function onDomReady() {
         $.ajax({
             type: "POST",
             url: "http://193.10.30.123/evaluations",
-            beforeSend: function (request)
-            {
-                request.setRequestHeader("Authority", "NEtKcVJ4VUtRUXd1S1BiTQ==");
-            },
+            headers: { 'Authorization': 'NEtKcVJ4VUtRUXd1S1BiTQ==', 'Accept': 'application/json','Content-Type': 'application/json' },
+            // beforeSend: function (request)
+            // {
+            //     request.setRequestHeader("Authority", "NEtKcVJ4VUtRUXd1S1BiTQ==");
+            // },
              data: {"Content-Type": param},
              dataType: 'json',
              success: function(data){

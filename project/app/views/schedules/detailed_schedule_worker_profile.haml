@@ -16,7 +16,7 @@
       = link_to "/worker_profiles/#{@schedule.worker_profile.id}/schedules" do
         = @schedule.worker_profile.facility.name
     %li.active
-      = "#{@schedule.begin.strftime("%-d/%-m")} - #{@schedule.end.strftime("%-d/%-m")}"
+      = "#{@schedule.begin_at.strftime("%-d/%-m")} - #{@schedule.end_at.strftime("%-d/%-m")}"
 
 = content_for :container do
 

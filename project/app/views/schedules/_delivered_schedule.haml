@@ -16,6 +16,15 @@
       /   Send
       - if @current_user.role.name == "SHIFT_MANAGER"
         %button#show-slots-logs-btn.btn.btn-info.send{:type => "submit"} SAFAPS S&F
+      = button_to "Compare Excel", action: "sendTo"
+      
+      = form_tag '/schedules/send', :method =>'post', :class => 'form-horizontal col-lg-6 center-block' do
+        %button#show-slots-logs-btn.btn.btn-info.bottom{:type => "submit"} Show
+
+      - slots = @schedule.map_slots_to_log_events()
+      - puts "avant"
+      - puts slots
+      - puts "apres"
     %hr 
     .panel.panel-default
       .panel-heading
