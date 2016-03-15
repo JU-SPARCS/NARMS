@@ -59,33 +59,30 @@ Narms::App.controllers :schedules do
     puts 'zizizizizizi +++++++ '
     
     token = 'NEtKcVJ4VUtRUXd1S1BiTQ=='
-    url = ''
-    events = { "ResponseURL": "http://toto.fr",
-                  "Events": [
-                    {
-                      "TimeZone": "Europe/Paris",
-                      "StartTime": "2016-02-05 17:18:30",
-                      "EndTime": "2016-02-06 17:18:30",
-                      "ASMEnvironment": "T",
-                      "ControlTechnology": "R",
-                      "ControllerStatus": "MCS",
-                      "Traffic": "VL",
-                      "Equipment": "O",
-                      "Weather": "HD"
-                    },
-                    {
-                      "TimeZone": "Europe/Paris",
-                      "StartTime": "2016-02-05 17:18:30",
-                      "EndTime": "2016-02-06 17:18:30",
-                      "ASMEnvironment": "T",
-                      "ControlTechnology": "R",
-                      "ControllerStatus": "MCS",
-                      "Traffic": "H",
-                      "Equipment": "O",
-                      "Weather": "HD"
-                    }
-                  ]
-                }#Events.where(id: params[:event_ids])
+    url = 'http://toto.fr'
+    events = {
+                "TimeZone": "Europe/Paris",
+                "StartTime": "2016-02-05 17:18:30",
+                "EndTime": "2016-02-06 17:18:30",
+                "ASMEnvironment": "T",
+                "ControlTechnology": "R",
+                "ControllerStatus": "MCS",
+                "Traffic": "VL",
+                "Equipment": "O",
+                "Weather": "HD"
+              },
+              {
+                "TimeZone": "Europe/Paris",
+                "StartTime": "2016-02-05 17:18:30",
+                "EndTime": "2016-02-06 17:18:30",
+                "ASMEnvironment": "T",
+                "ControlTechnology": "R",
+                "ControllerStatus": "MCS",
+                "Traffic": "H",
+                "Equipment": "O",
+                "Weather": "HD"
+              }
+                  #Events.where(id: params[:event_ids])
  
     Typhoeus.post(
       "193.10.30.123/evaluations",
@@ -98,7 +95,7 @@ Narms::App.controllers :schedules do
         'Events' => events,
       }.to_json
     )
-    redirect 'worker_profiles/3/schedules/1'
+    redirect 'safaps_profile'
   end
 
   def sendTo
