@@ -57,7 +57,7 @@ Narms::App.controllers :schedules do
 
   post :send do
     puts 'zizizizizizi +++++++ '
-    redirect 'worker_profiles/3/schedules/1'
+    
     token = 'NEtKcVJ4VUtRUXd1S1BiTQ=='
     url = ''
     events = { "ResponseURL": "http://toto.fr",
@@ -98,6 +98,7 @@ Narms::App.controllers :schedules do
         'Events' => events,
       }.to_json
     )
+    redirect 'worker_profiles/3/schedules/1'
   end
 
   def sendTo

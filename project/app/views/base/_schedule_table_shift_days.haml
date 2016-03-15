@@ -35,6 +35,9 @@
               .text-center.text-muted
                 %strong.small
                   = time.strftime("%H:%M")
+            - slots_for_time.each do | slot |
+              - puts slot
+              - puts "--------------"
             - slots_for_time.each do |slot|
               - if slot != nil
                 %td.text-center
