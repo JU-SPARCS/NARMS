@@ -59,7 +59,7 @@ Narms::App.controllers :schedules do
     puts 'zizizizizizi +++++++ '
     
     token = 'NEtKcVJ4VUtRUXd1S1BiTQ=='
-    url = 'http://toto.fr'
+    url = 'http://193.10.30.126/api/safaps-profile'
     events = {
                 "TimeZone": "Europe/Paris",
                 "StartTime": "2016-02-05 17:18:30",
