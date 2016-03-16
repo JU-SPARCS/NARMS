@@ -38,16 +38,22 @@
               %tr
                 %th Date-Hours Start
                 %th Date-Hours End
+                %th Planned?
                 %th Log-events
             %tbody
               - slots.each do | sloti |
                 %tr
                   %td 
-                    = sloti[1][:slot].begin_at
+                    = sloti[0].begin.utc
                   %td 
-                    = sloti[1][:slot].end_at
+                    = sloti[0].end.utc
+                  %td
+                    - if sloti[1][:slot]
+                      = "yes"
                   %td 
-                    = sloti[1][:events]
+                    - sloti[1][:events].each do |event|
+                      = "- time: #{event.happened_at}, type: #{event.event_type}, role: #{event.worker_role}, workstation: #{event.workstation.name}"
+                      %hr
 /         .row
 /           MONDAY
 /         %br
