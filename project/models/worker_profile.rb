@@ -30,6 +30,6 @@ class WorkerProfile < ActiveRecord::Base
   # Callbacks
 
   def get_schedules_over_period(start_at, end_at)
-  	schedules.where("end > ? AND begin < ?", start_at, end_at).order(:begin)
+  	schedules.where("end_at > ? AND begin_at < ?", start_at, end_at).order(:begin_at)
   end
 end

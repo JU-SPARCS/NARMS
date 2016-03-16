@@ -10,18 +10,36 @@
         %th Nr. of ATCOs
         %th Options
     %tbody
-      - @shifts.each do |shift|
+      = form_tag '/shifts', :method => "post" do |f|
         %tr
-          %td
-            = shift.id
-          %td
-            = shift.facility.name
-          %td
-            = shift.begin
-          %td
-            = shift.end
-          %td
-            = shift.worker_profiles.count
-          %td
-            = link_to "/shifts/#{shift.id}", :class => 'btn btn-default btn-sm' do
-              View
+          %th
+          %th
+            %select{:name => "facility", :required => true, :multiple => false}
+              - @facilities.each do |facility|
+                %option{:value => facility.id}= facility.name 
+          %th
+            %input{:type => "date", :name => "begin_at", :placeholder => "Begin date"}
+          %th
+            %input{:type => "date", :name => "end_at", :placeholder => "End date"}
+          %th
+            %select{:name => "workers[]", :required => true, :multiple => true}
+              - @worker_profiles.each do |wp|
+                %option{:value => wp.pub_id}
+                  = wp.first_name + ' ' + wp.name
+          %th
+            %button.btn.btn-primary.btn-sm{:id => "submit", :type => "submit"} Create
+          - @shifts.each do |shift|
+            %tr
+              %td
+                = shift.id
+              %td
+                = shift.facility.name
+              %td
+                = shift.begin
+              %td
+                = shift.end
+              %td
+                = shift.worker_profiles.count
+              %td
+                = link_to "/shifts/#{shift.id}", :class => 'btn btn-default btn-sm' do
+                  View

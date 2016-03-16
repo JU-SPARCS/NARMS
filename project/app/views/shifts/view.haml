@@ -1,6 +1,8 @@
 = content_for :container do
   %h1.text-capitalize
     = "Shift Team # #{@shift.id}"
+  %h4
+    = " #{@shift.begin} - #{@shift.end}"
   / Tabs for Shift Details and Shift Schedule
   %ul.nav.nav-tabs
     %li.active
@@ -12,36 +14,44 @@
   #myTabContent.tab-content
     / Shift schedule tab
     #schedule-details.tab-pane.fade.active.in
-      %h2.text-danger This is just dummy data.
       .col-lg-12.page-header
-        %form#filter-slots-log-form.display.form-inline
-          .form-group
-            %input#start-date-logs.form-control{:placeholder => "Start date", :type => "date"}/
-            %input#end-date-logs.form-control{:placeholder => "End date", :type => "date"}
-          %button#show-slots-logs-btn.btn.btn-info.bottom{:type => "submit"} Show
+        %h3 Create slot
+        = form_tag '/shifts/'+@shift.id.to_s,  :class => "display form-inline", :method => "post" do |f|
+          %input{:type => "date", :name => "begin_at", :placeholder => "Begin datetime"}
+          %select{:name => "workers", :required => true}
+            - @workers.each do |wp|
+              %option{:value => wp.pub_id}
+                = wp.first_name + ' ' + wp.name
+          %button.btn.btn-primary.btn-sm{:id => "submit", :type => "submit"} Create
+
+      -# .col-lg-12.page-header
+      -#   %form#filter-slots-log-form.display.form-inline
+      -#     .form-group
+      -#       %input#start-date-logs.form-control{:placeholder => "Start date", :type => "date"}/
+      -#       %input#end-date-logs.form-control{:placeholder => "End date", :type => "date"}
+      -#     %button#show-slots-logs-btn.btn.btn-info.bottom{:type => "submit"} Show
       .col-lg-12
         %table.table.table-striped.table-hover
           %thead
             %tr
               %td.success.text-center{:colspan => "7"}
                 = @shift.facility.name
-            %tr
-              %th #
-              %th Planned
-              %th ER-1
-              %th ER-2
-              %th Released
-              %th ER-3
-              %th ER-4
-          %tbody
-            %tr
-              %td 1
-              %td 9:30
-              %td Joe
-              %td Ann
-              %td Jim
-              %td Mike
-              %td Levy
+            - @workers.each do |wp|
+              %thead
+                %tr
+                  %th.text-center= wp.first_name + ' ' + wp.name
+              %tbody
+                - schedules = wp.get_schedules_over_period(@shift.begin, @shift.end)
+                - if schedules != nil && schedules.size != 0
+                  - schedules.each do |schedule|
+                    %tr
+                      %td
+                        = partial "/base/schedule_table_days.haml", :locals => { schedules: Array(schedule), start_at: schedule.begin_at }
+                - else
+                  %tr
+                    %td.alert.alert-info
+                      = "No planned schedule for this ATCO on this shift yet."
+
     / Shift logs
     #shift-logs.tab-pane.fade
       %h2.text-danger This is just dummy data.
