@@ -78,13 +78,13 @@ ActiveRecord::Base.transaction do
       facility.workstations.new(name: "#{facility.name} - Bay A - 1")
       facility.workstations.new(name: "#{facility.name} - Bay A - 2")
 
-      facility.worker_profiles.new(first_name: sm1.first_name, name: sm1.name)
-      facility.worker_profiles.new(first_name: sm2.first_name, name: sm2.name)
-      facility.worker_profiles.new(first_name: atco1.first_name, name: atco1.name)
-      facility.worker_profiles.new(first_name: atco2.first_name, name: atco2.name)
-      facility.worker_profiles.new(first_name: atco3.first_name, name: atco3.name)
-      facility.worker_profiles.new(first_name: atco4.first_name, name: atco4.name)
-      facility.worker_profiles.new(first_name: atco5.first_name, name: atco5.name)
+      facility.worker_profiles.new(first_name: sm1.first_name, name: sm1.name, user: sm1)
+      facility.worker_profiles.new(first_name: sm2.first_name, name: sm2.name, user: sm2)
+      facility.worker_profiles.new(first_name: atco1.first_name, name: atco1.name, user: atco1)
+      facility.worker_profiles.new(first_name: atco2.first_name, name: atco2.name, user: atco2)
+      facility.worker_profiles.new(first_name: atco3.first_name, name: atco3.name, user: atco3)
+      facility.worker_profiles.new(first_name: atco4.first_name, name: atco4.name, user: atco4)
+      facility.worker_profiles.new(first_name: atco5.first_name, name: atco5.name, user: atco5)
     end
     nordica.token_holders.create!(tokenable_r: facility, name: facility.name)
     print_facility facility
@@ -95,8 +95,8 @@ ActiveRecord::Base.transaction do
       facility.workstations.new(name: "#{facility.name} - Bay A - 1")
       facility.workstations.new(name: "#{facility.name} - Bay A - 2")
 
-      facility.worker_profiles.new(first_name: sm1.first_name, name: sm1.name)
-      facility.worker_profiles.new(first_name: atco1.first_name, name: atco1.name)
+      facility.worker_profiles.new(first_name: sm1.first_name, name: sm1.name, user: sm1)
+      facility.worker_profiles.new(first_name: atco1.first_name, name: atco1.name, user: atco1)
     end
     nextjet.token_holders.create!(tokenable_r: facility, name: facility.name)
     print_facility facility 
