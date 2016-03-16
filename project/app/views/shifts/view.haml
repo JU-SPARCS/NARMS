@@ -16,20 +16,13 @@
     #schedule-details.tab-pane.fade.active.in
       .col-lg-12.page-header
         %h3 Create slot
-        = form_tag '/shifts/'+@shift.id.to_s,  :class => "display form-inline", :method => "post" do |f|
-          %input{:type => "date", :name => "begin_at", :placeholder => "Begin datetime"}
-          %select{:name => "workers", :required => true}
+        = form_tag '/shifts/'+@shift.id.to_s, :class => "display form-inline", :method => "post" do |f|
+          %input.form-control{:type => "date", :name => "begin_at", :placeholder => "Begin date/time of slot"}
+          %select.form-control{:name => "workers", :required => true}
             - @workers.each do |wp|
               %option{:value => wp.pub_id}
                 = wp.first_name + ' ' + wp.name
-          %button.btn.btn-primary.btn-sm{:id => "submit", :type => "submit"} Create
-
-      -# .col-lg-12.page-header
-      -#   %form#filter-slots-log-form.display.form-inline
-      -#     .form-group
-      -#       %input#start-date-logs.form-control{:placeholder => "Start date", :type => "date"}/
-      -#       %input#end-date-logs.form-control{:placeholder => "End date", :type => "date"}
-      -#     %button#show-slots-logs-btn.btn.btn-info.bottom{:type => "submit"} Show
+          %button.btn.btn-primary{:id => "submit", :type => "submit"} Create
       .col-lg-12
         %table.table.table-striped.table-hover
           %thead
