@@ -15,8 +15,8 @@ Narms::App.controllers :base, map: '/' do
   	end
     @current_schedules = Schedules::Worker
       .where(:worker_profile_id => worker_id)
-      .where("begin_at < ?", date)
-      .where("end_at > ?", date)
+      .where("begin_at <= ?", date)
+      .where("end_at >= ?", date)
 
     render '/base/home'
   end

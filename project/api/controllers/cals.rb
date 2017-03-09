@@ -1,7 +1,7 @@
 Narms::Api.controllers :cals, map: 'cals/:facility_id' do
   before do
     @facility = Facility.find_by_pub_id(params[:facility_id])
-    ensure_identified_by_token!(params[:token])
+#    ensure_identified_by_token!(@json[:token])
   end
 
   post :users do
@@ -19,14 +19,22 @@ Narms::Api.controllers :cals, map: 'cals/:facility_id' do
   end
 
   post :log_events do
+    log_event = JSON.parse(request.body.read)
+    worker_profile = WorkerProfile.find_by_pub_id(log_event["user_id"])
+    workstation = Workstation.find_by_pub_id(log_event["workstation_id"])
+
+    puts log_event
+    puts worker_profile
+    puts workstation 
+   
     Events::Log.create!(
-      worker_profile: WorkerProfile.find_by_pub_id(params[:user_id]),
-      workstation: Workstation.find_by_pub_id(params[:workstation_id]),
-      happened_at: params[:happened_at],
-      event_type: params[:event_type],
-      worker_role: params[:worker_role],
-      worker_responsability: params[:worker_responsability],
-      operational_status: params[:operational_status]
+      worker_profile: worker_profile,
+      workstation: workstation,
+      happened_at: log_event["happened_at"],
+      event_type: log_event["event_type:"],
+      worker_role: log_event["worker_role"],
+      worker_responsability: log_event["worker_responsability"],
+      operational_status: log_event["operational_status"]
     ).happened_at
   end
 
