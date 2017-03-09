@@ -32,7 +32,7 @@ Narms::Api.controllers :cals, map: 'cals/:facility_id' do
       		worker_profile: worker_profile,
       		workstation: workstation,
       		happened_at: log_event["happened_at"],
-      		event_type: log_event["event_type:"],
+      		event_type: log_event["event_type"],
       		worker_role: log_event["worker_role"],
       		worker_responsability: log_event["worker_responsability"],
       		operational_status: log_event["operational_status"]
