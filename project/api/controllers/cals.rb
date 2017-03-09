@@ -27,15 +27,23 @@ Narms::Api.controllers :cals, map: 'cals/:facility_id' do
     puts worker_profile
     puts workstation 
    
-    Events::Log.create!(
-      worker_profile: worker_profile,
-      workstation: workstation,
-      happened_at: log_event["happened_at"],
-      event_type: log_event["event_type:"],
-      worker_role: log_event["worker_role"],
-      worker_responsability: log_event["worker_responsability"],
-      operational_status: log_event["operational_status"]
-    ).happened_at
+    if (worker_profile != nil && workstation != nil)
+	Events::Log.create!(
+      		worker_profile: worker_profile,
+      		workstation: workstation,
+      		happened_at: log_event["happened_at"],
+      		event_type: log_event["event_type:"],
+      		worker_role: log_event["worker_role"],
+      		worker_responsability: log_event["worker_responsability"],
+      		operational_status: log_event["operational_status"]
+    	).happened_at
+
+    	content_type :json
+    	{:success => "True"}.to_json
+    else
+	content_type :json
+        {:success => "False"}.to_json
+    end
   end
 
   post :airspace_segments do
