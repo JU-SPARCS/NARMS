@@ -17,14 +17,16 @@ module Narms
             'Home' => '/',
             'Schedules' => '/schedules',
             'Manage Shifts' => '/shifts',
-            'Working Places' => '/worker_profiles'
+            'Working Places' => '/worker_profiles',
+	    'Log Events' => '/log_events'
           }
         else
           tabs = {
             # Tabs to put in the navbar. 
             'Home' => '/',
             'Schedules' => '/schedules',
-            'Working Places' => '/worker_profiles'
+            'Working Places' => '/worker_profiles',
+ 	    'Log Events' => '/log_events'
           }
         end
 
