@@ -1,0 +1,24 @@
+= content_for :container do
+  %h1= "Log events for #{@current_user.first_name} #{@current_user.name}"
+  - @current_user.worker_profiles.each do |profile|
+    %h2= "#{profile.facility.name}"
+      %table.table.table-striped.table-hover
+        %thead
+          %tr
+            %th ID
+            %th Happened At
+            %th Workstation
+            %th Worker Role
+            %th Worker Responsability
+            %th Operational Status
+            %th Event type
+        %tbody
+        	- profile.log_events.each do |log_event|
+          %tr
+            %td= log_event.id
+            %td= log_event.happened_at
+            %td= log_event.workstation.name
+            %td= log_event.worker_role
+            %td= log_event.worker_responsability
+            %td= log_event.operational_status
+            %td= log_event.event_type
